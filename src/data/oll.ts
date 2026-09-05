@@ -18,40 +18,6 @@ export const OLL_GROUPS = [
 ];
 
 export const ollCases: OllCase[] = [
-  // ─── CROSS ───────────────────────────────────────────────────────────────
-  {
-    id: 'oll-dot',
-    name: 'Dot',
-    group: 'cross',
-    alg: "R U2 R2 F R F' U2 R' F R F'",
-    description: 'Không có edge nào đúng hướng',
-    isLearning: false,
-  },
-  {
-    id: 'oll-cross',
-    name: 'Cross',
-    group: 'cross',
-    alg: "F (R U R' U')3 F'",
-    description: 'Cross hoàn chỉnh, không cần alg',
-    isLearning: false,
-  },
-  {
-    id: 'oll-line',
-    name: 'Line',
-    group: 'cross',
-    alg: "F R U R' U' F'",
-    description: 'Đường thẳng ngang qua tâm',
-    isLearning: false,
-  },
-  {
-    id: 'oll-l-shape',
-    name: 'L-Shape',
-    group: 'cross',
-    alg: "f R U R' U' f'",
-    description: 'Chữ L (2 edge liền kề)',
-    isLearning: false,
-  },
-
   // ─── CORNERS (CFOP 2-look OLL) ────────────────────────────────────────
   {
     id: 'oll-fish',
@@ -92,7 +58,7 @@ export const ollCases: OllCase[] = [
     id: 'oll-l',
     name: 'L (Diagonal)',
     group: 'corners',
-    alg: "x (R' U R D') (R' U' R D)",
+    alg: "x (R' U R D') (R' U' R D) x'",
     description: '2 corner chéo nhau cùng hướng',
     youtubeRef: 'https://www.youtube.com/watch?v=GhmYBgLoQQg',
     isLearning: true,
@@ -101,7 +67,7 @@ export const ollCases: OllCase[] = [
     id: 'oll-t',
     name: 'T (Adjacent)',
     group: 'corners',
-    alg: "x (L U R' U') (L' U R U')",
+    alg: "x (L U R' U') (L' U R U') x'",
     description: '2 corner cạnh nhau đối diện',
     youtubeRef: 'https://www.youtube.com/watch?v=GhmYBgLoQQg',
     isLearning: true,
@@ -116,6 +82,32 @@ export const ollCases: OllCase[] = [
     isLearning: true,
   },
 
+  // ─── CROSS ───────────────────────────────────────────────────────────────
+  {
+    id: 'oll-dot',
+    name: 'Dot',
+    group: 'cross',
+    alg: "R U2 R2 F R F' U2 R' F R F'",
+    description: 'Không có edge nào đúng hướng',
+    isLearning: false,
+  },
+  {
+    id: 'oll-line',
+    name: 'Line',
+    group: 'cross',
+    alg: "F R U R' U' F'",
+    description: 'Đường thẳng ngang qua tâm',
+    isLearning: false,
+  },
+  {
+    id: 'oll-l-shape',
+    name: 'L-Shape',
+    group: 'cross',
+    alg: "f R U R' U' f'",
+    description: 'Chữ L (2 edge liền kề)',
+    isLearning: false,
+  },
+
   // ─── EDGES ───────────────────────────────────────────────────────────────
   {
     id: 'oll-ne',
@@ -123,6 +115,14 @@ export const ollCases: OllCase[] = [
     group: 'edges',
     alg: "R U R' U' R' F R F'",
     description: 'Không có edge nào đúng hướng',
+    isLearning: false,
+  },
+  {
+    id: 'oll-fish-shape',
+    name: 'Fish Shape (OLL 37)',
+    group: 'cross',
+    alg: "F R' F' R U R U' R'",
+    description: 'Dạng con cá (Mounted Fish)',
     isLearning: false,
   },
 ];
