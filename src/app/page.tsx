@@ -3,10 +3,10 @@
 import Link from 'next/link';
 
 const quickStats = [
-  { label: 'OLL Cases', value: '57', icon: '🟡', href: '/oll', colorClass: 'text-accent-blue', hoverBorder: 'hover:border-accent-blue' },
-  { label: 'PLL Cases', value: '21', icon: '🔀', href: '/pll', colorClass: 'text-accent-purple', hoverBorder: 'hover:border-accent-purple' },
-  { label: 'Ký hiệu', value: '16+', icon: '↔️', href: '/moves', colorClass: 'text-accent-cyan', hoverBorder: 'hover:border-accent-cyan' },
-  { label: 'Đang học', value: '6', icon: '⭐', href: '/notes', colorClass: 'text-accent-orange', hoverBorder: 'hover:border-accent-orange' },
+  { label: 'OLL Cases', value: '57', icon: '🟡', href: '/oll', colorClass: 'text-blue-600', hoverBorder: 'hover:border-blue-500' },
+  { label: 'PLL Cases', value: '21', icon: '🔀', href: '/pll', colorClass: 'text-purple-600', hoverBorder: 'hover:border-purple-500' },
+  { label: 'Ký hiệu', value: '16+', icon: '↔️', href: '/moves', colorClass: 'text-sky-600', hoverBorder: 'hover:border-sky-500' },
+  { label: 'Đang học', value: '6', icon: '⭐', href: '/notes', colorClass: 'text-amber-600', hoverBorder: 'hover:border-amber-500' },
 ];
 
 const cfopSteps = [
@@ -14,41 +14,37 @@ const cfopSteps = [
     step: 'Cross',
     abbr: '✚',
     desc: 'Tạo dấu thập trắng ở mặt dưới',
-    color: '#f1f5f9',
-    badgeClass: 'bg-white/10 text-slate-100 border-white/20',
+    badgeClass: 'bg-slate-100 text-slate-800 border-slate-200',
   },
   {
     step: 'F2L',
     abbr: 'F2L',
     desc: 'Điền 4 cặp slot dưới cùng',
-    color: '#22c55e',
-    badgeClass: 'bg-accent-green/10 text-accent-green border-accent-green/30',
+    badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
   },
   {
     step: 'OLL',
     abbr: '🟡',
     desc: 'Làm vàng hoàn toàn mặt trên',
-    color: '#fbbf24',
-    badgeClass: 'bg-yellow-400/10 text-yellow-400 border-yellow-400/30',
+    badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
   },
   {
     step: 'PLL',
     abbr: '🔀',
     desc: 'Hoán vị các piece mặt trên',
-    color: '#a855f7',
-    badgeClass: 'bg-accent-purple/10 text-accent-purple border-accent-purple/30',
+    badgeClass: 'bg-purple-50 text-purple-800 border-purple-200',
   },
 ];
 
 export default function HomePage() {
   return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto animate-fade-in">
+    <div className="p-6 md:p-10 max-w-5xl mx-auto animate-fade-in pb-16">
       {/* Hero */}
       <div className="mb-12">
-        <div className="inline-block bg-accent-blue/15 text-accent-blue text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
+        <div className="inline-block bg-accent-blue/10 text-accent-blue text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
           CFOP Method
         </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight bg-gradient-to-br from-[#e8eaf6] to-[#9095b0] bg-clip-text text-transparent mb-3">
+        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-slate-900 mb-3">
           Rubik Hub
         </h1>
         <p className="text-text-secondary text-base max-w-lg leading-relaxed">
@@ -62,7 +58,7 @@ export default function HomePage() {
           <Link
             key={stat.label}
             href={stat.href}
-            className={`bg-bg-card border border-border-subtle rounded-2xl p-5 hover:shadow-[0_0_20px_rgba(79,90,255,0.25)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer ${stat.hoverBorder}`}
+            className={`bg-bg-card border border-border-subtle rounded-2xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-xs ${stat.hoverBorder}`}
           >
             <div className="text-2xl mb-2">{stat.icon}</div>
             <div className={`text-3xl font-extrabold tracking-tight ${stat.colorClass}`}>
@@ -84,16 +80,16 @@ export default function HomePage() {
           {cfopSteps.map((s, i) => (
             <div
               key={s.step}
-              className={`border rounded-xl p-4 relative ${s.badgeClass}`}
+              className={`border rounded-xl p-4 relative shadow-xs ${s.badgeClass}`}
             >
               {i < cfopSteps.length - 1 && (
-                <div className="hidden lg:block absolute -right-3.5 top-1/2 -translate-y-1/2 text-text-muted text-lg z-10">
+                <div className="hidden lg:block absolute -right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg z-10">
                   →
                 </div>
               )}
               <div className="text-xl mb-1.5 font-bold">{s.abbr}</div>
               <div className="text-sm font-bold">{s.step}</div>
-              <div className="text-xs text-text-muted mt-1 leading-normal">{s.desc}</div>
+              <div className="text-xs opacity-80 mt-1 leading-normal">{s.desc}</div>
             </div>
           ))}
         </div>
@@ -116,8 +112,8 @@ export default function HomePage() {
               href={link.href}
               className={`flex items-center px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
                 link.primary
-                  ? 'bg-accent-blue hover:bg-indigo-600 text-white shadow-md shadow-accent-blue/20 hover:shadow-accent-blue/35'
-                  : 'bg-bg-card hover:bg-bg-hover text-text-secondary hover:text-text-primary border border-border-subtle hover:border-border-active'
+                  ? 'bg-accent-blue hover:bg-blue-700 text-white shadow-sm'
+                  : 'bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-border-subtle shadow-xs'
               }`}
             >
               {link.label}

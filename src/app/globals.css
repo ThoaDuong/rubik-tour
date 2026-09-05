@@ -5,55 +5,55 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
-  --color-bg-primary: #0d0f14;
-  --color-bg-secondary: #13161e;
-  --color-bg-tertiary: #1a1d27;
-  --color-bg-card: #1e2130;
-  --color-bg-hover: #252840;
+  --color-bg-primary: #f8fafc;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f1f5f9;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #f1f5f9;
 
-  --color-border-subtle: #2a2d3e;
-  --color-border-active: #4f5aff;
+  --color-border-subtle: #e2e8f0;
+  --color-border-active: #3b82f6;
 
-  --color-text-primary: #e8eaf6;
-  --color-text-secondary: #9095b0;
-  --color-text-muted: #5a5f7a;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
 
-  --color-accent-blue: #4f5aff;
-  --color-accent-blue-dim: rgba(79, 90, 255, 0.15);
-  --color-accent-purple: #a855f7;
-  --color-accent-purple-dim: rgba(168, 85, 247, 0.15);
-  --color-accent-cyan: #06b6d4;
-  --color-accent-cyan-dim: rgba(6, 182, 212, 0.15);
-  --color-accent-green: #22c55e;
-  --color-accent-green-dim: rgba(34, 197, 94, 0.15);
-  --color-accent-orange: #f97316;
-  --color-accent-orange-dim: rgba(249, 115, 22, 0.15);
+  --color-accent-blue: #2563eb;
+  --color-accent-blue-dim: rgba(37, 99, 235, 0.08);
+  --color-accent-purple: #7c3aed;
+  --color-accent-purple-dim: rgba(124, 58, 237, 0.08);
+  --color-accent-cyan: #0284c7;
+  --color-accent-cyan-dim: rgba(2, 132, 199, 0.08);
+  --color-accent-green: #16a34a;
+  --color-accent-green-dim: rgba(22, 163, 74, 0.08);
+  --color-accent-orange: #ea580c;
+  --color-accent-orange-dim: rgba(234, 88, 12, 0.08);
 }
 
 :root {
-  --bg-primary: #0d0f14;
-  --bg-secondary: #13161e;
-  --bg-tertiary: #1a1d27;
-  --bg-card: #1e2130;
-  --bg-hover: #252840;
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-hover: #f1f5f9;
 
-  --border-color: #2a2d3e;
-  --border-active: #4f5aff;
+  --border-color: #e2e8f0;
+  --border-active: #3b82f6;
 
-  --text-primary: #e8eaf6;
-  --text-secondary: #9095b0;
-  --text-muted: #5a5f7a;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
 
-  --accent-blue: #4f5aff;
-  --accent-blue-dim: rgba(79, 90, 255, 0.15);
-  --accent-purple: #a855f7;
-  --accent-purple-dim: rgba(168, 85, 247, 0.15);
-  --accent-cyan: #06b6d4;
-  --accent-cyan-dim: rgba(6, 182, 212, 0.15);
-  --accent-green: #22c55e;
-  --accent-green-dim: rgba(34, 197, 94, 0.15);
-  --accent-orange: #f97316;
-  --accent-orange-dim: rgba(249, 115, 22, 0.15);
+  --accent-blue: #2563eb;
+  --accent-blue-dim: rgba(37, 99, 235, 0.08);
+  --accent-purple: #7c3aed;
+  --accent-purple-dim: rgba(124, 58, 237, 0.08);
+  --accent-cyan: #0284c7;
+  --accent-cyan-dim: rgba(2, 132, 199, 0.08);
+  --accent-green: #16a34a;
+  --accent-green-dim: rgba(22, 163, 74, 0.08);
+  --accent-orange: #ea580c;
+  --accent-orange-dim: rgba(234, 88, 12, 0.08);
 
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -78,14 +78,14 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: #f8fafc;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: #cbd5e1;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: #94a3b8;
 }
 
 /* Keyframes */
@@ -100,7 +100,7 @@ body {
 
 /* Twisty Player Web Component host styling */
 twisty-player {
-  width: 180px;
-  height: 140px;
-  display: block;
+  display: grid;
+  width: 100%;
+  height: 100%;
 }

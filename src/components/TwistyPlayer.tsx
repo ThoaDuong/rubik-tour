@@ -9,8 +9,10 @@ interface TwistyPlayerProps {
   background?: 'none' | 'checkered' | 'auto';
   controlPanel?: 'none' | 'bottom-row' | 'auto';
   hintFacelets?: 'none' | 'floating';
-  width?: number;
-  height?: number;
+  cameraDistance?: number;
+  width?: number | string;
+  height?: number | string;
+  className?: string;
 }
 
 export default function TwistyPlayer({
@@ -20,12 +22,17 @@ export default function TwistyPlayer({
   background = 'none',
   controlPanel = 'none',
   hintFacelets = 'floating',
-  width = 180,
-  height = 140,
+  cameraDistance = 5.8,
+  width = '100%',
+  height = 160,
+  className = '',
 }: TwistyPlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLElement | null>(null);
   const [error, setError] = useState(false);
+
+  const styleWidth = typeof width === 'number' ? `${width}px` : width;
+  const styleHeight = typeof height === 'number' ? `${height}px` : height;
 
   useEffect(() => {
     let cancelled = false;
@@ -49,12 +56,13 @@ export default function TwistyPlayer({
           background,
           controlPanel,
           hintFacelets,
+          ...(visualization === '3D' && cameraDistance ? { cameraDistance } : {}),
         });
 
-        // Style it
-        player.style.width = `${width}px`;
-        player.style.height = `${height}px`;
-        player.style.display = 'block';
+        // Style it - grid allows child .wrapper to properly fill and contain
+        player.style.width = '100%';
+        player.style.height = '100%';
+        player.style.display = 'grid';
 
         containerRef.current.appendChild(player);
         playerRef.current = player;
@@ -73,13 +81,13 @@ export default function TwistyPlayer({
         playerRef.current = null;
       }
     };
-  }, [alg, experimentalSetupAlg, visualization, background, controlPanel, hintFacelets, width, height]);
+  }, [alg, experimentalSetupAlg, visualization, background, controlPanel, hintFacelets, cameraDistance, styleWidth, styleHeight]);
 
   if (error) {
     return (
       <div
         className="flex flex-col items-center justify-center text-text-muted text-xs text-center"
-        style={{ width, height }}
+        style={{ width: styleWidth, height: styleHeight }}
       >
         <span className="text-base">🎲</span>
         <span className="text-[10px] mt-1 leading-tight">Cube preview<br />unavailable</span>
@@ -87,5 +95,11 @@ export default function TwistyPlayer({
     );
   }
 
-  return <div ref={containerRef} style={{ width, height }} />;
+  return (
+    <div
+      ref={containerRef}
+      className={`w-full flex items-center justify-center overflow-hidden ${className}`}
+      style={{ width: styleWidth, height: styleHeight }}
+    />
+  );
 }

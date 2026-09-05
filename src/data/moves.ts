@@ -11,8 +11,7 @@ export interface MoveNotation {
 
 export const moveGroups = [
   { id: 'basic', label: 'Cơ bản (6 mặt)' },
-  { id: 'slice', label: 'Slice (giữa)' },
-  { id: 'rotation', label: 'Xoay cả khối' },
+  { id: 'slice_rotation', label: 'Lớp giữa & Xoay khối' },
 ];
 
 export const moves: (MoveNotation & { group: string })[] = [
@@ -34,16 +33,6 @@ export const moves: (MoveNotation & { group: string })[] = [
     direction: 'ccw',
     description: 'Mặt phải quay ngược chiều kim đồng hồ',
     alg: "R'",
-    color: '#3b82f6',
-    group: 'basic',
-  },
-  {
-    symbol: 'R2',
-    name: 'Right 2',
-    face: 'R',
-    direction: '180',
-    description: 'Mặt phải quay 180°',
-    alg: 'R2',
     color: '#3b82f6',
     group: 'basic',
   },
@@ -91,16 +80,6 @@ export const moves: (MoveNotation & { group: string })[] = [
     color: '#fbbf24',
     group: 'basic',
   },
-  {
-    symbol: 'U2',
-    name: 'Up 2',
-    face: 'U',
-    direction: '180',
-    description: 'Mặt trên quay 180°',
-    alg: 'U2',
-    color: '#fbbf24',
-    group: 'basic',
-  },
 
   // ─── DOWN FACE ─────────────────────────────────────────────────────────
   {
@@ -110,7 +89,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     direction: 'cw',
     description: 'Mặt dưới quay theo chiều kim đồng hồ (nhìn từ dưới)',
     alg: 'D',
-    color: '#f1f5f9',
+    color: '#64748b',
     group: 'basic',
   },
   {
@@ -120,7 +99,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     direction: 'ccw',
     description: 'Mặt dưới quay ngược chiều kim đồng hồ',
     alg: "D'",
-    color: '#f1f5f9',
+    color: '#64748b',
     group: 'basic',
   },
 
@@ -168,7 +147,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     group: 'basic',
   },
 
-  // ─── SLICE ─────────────────────────────────────────────────────────────
+  // ─── SLICE & ROTATION (LỚP GIỮA & XOAY CẢ KHỐI) ────────────────────────
   {
     symbol: 'M',
     name: 'Middle',
@@ -177,7 +156,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     description: 'Lớp giữa theo chiều của L (nhìn từ phải)',
     alg: 'M',
     color: '#a855f7',
-    group: 'slice',
+    group: 'slice_rotation',
   },
   {
     symbol: 'E',
@@ -187,7 +166,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     description: 'Lớp giữa theo chiều của D (nhìn từ trên)',
     alg: 'E',
     color: '#06b6d4',
-    group: 'slice',
+    group: 'slice_rotation',
   },
   {
     symbol: 'S',
@@ -197,10 +176,8 @@ export const moves: (MoveNotation & { group: string })[] = [
     description: 'Lớp giữa theo chiều của F',
     alg: 'S',
     color: '#10b981',
-    group: 'slice',
+    group: 'slice_rotation',
   },
-
-  // ─── ROTATION (XOAY CẢ KHỐI) ──────────────────────────────────────────
   {
     symbol: 'x',
     name: 'Rotate X',
@@ -209,17 +186,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     description: 'Xoay toàn bộ khối Rubik lên trên theo trục R (nhìn từ phải)',
     alg: 'x',
     color: '#818cf8',
-    group: 'rotation',
-  },
-  {
-    symbol: "x'",
-    name: "Rotate X'",
-    face: 'R',
-    direction: 'ccw',
-    description: 'Xoay toàn bộ khối Rubik xuống dưới theo trục R',
-    alg: "x'",
-    color: '#818cf8',
-    group: 'rotation',
+    group: 'slice_rotation',
   },
   {
     symbol: 'y',
@@ -229,17 +196,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     description: 'Xoay toàn bộ khối Rubik sang trái theo trục U (nhìn từ trên)',
     alg: 'y',
     color: '#38bdf8',
-    group: 'rotation',
-  },
-  {
-    symbol: "y'",
-    name: "Rotate Y'",
-    face: 'U',
-    direction: 'ccw',
-    description: 'Xoay toàn bộ khối Rubik sang phải theo trục U',
-    alg: "y'",
-    color: '#38bdf8',
-    group: 'rotation',
+    group: 'slice_rotation',
   },
   {
     symbol: 'z',
@@ -249,17 +206,7 @@ export const moves: (MoveNotation & { group: string })[] = [
     description: 'Xoay toàn bộ khối Rubik theo chiều kim đồng hồ theo trục F (nhìn từ trước)',
     alg: 'z',
     color: '#f43f5e',
-    group: 'rotation',
-  },
-  {
-    symbol: "z'",
-    name: "Rotate Z'",
-    face: 'F',
-    direction: 'ccw',
-    description: 'Xoay toàn bộ khối Rubik ngược chiều kim đồng hồ theo trục F',
-    alg: "z'",
-    color: '#f43f5e',
-    group: 'rotation',
+    group: 'slice_rotation',
   },
 ];
 

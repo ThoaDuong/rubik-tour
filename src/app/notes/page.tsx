@@ -27,8 +27,8 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
   const youtubeRef = 'youtubeRef' in case_ ? case_.youtubeRef : undefined;
   const isOll = case_.type === 'OLL';
   const badgeClass = isOll
-    ? 'bg-accent-blue/15 text-accent-blue'
-    : 'bg-accent-purple/15 text-accent-purple';
+    ? 'bg-accent-blue/10 text-accent-blue'
+    : 'bg-accent-purple/10 text-accent-purple';
 
   return (
     <div className="animate-fade-in max-w-3xl">
@@ -48,30 +48,35 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
       {/* Cube + Alg previews */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-7">
         {/* 2D preview */}
-        <div className="bg-bg-card border border-border-subtle rounded-2xl p-6 flex flex-col items-center gap-2 shadow-sm">
+        <div className="bg-bg-card border border-border-subtle rounded-2xl p-6 flex flex-col items-center gap-2 shadow-xs">
           <div className="text-xs text-text-muted font-semibold tracking-wider mb-1">
             2D TOP VIEW
           </div>
-          <TwistyPlayer alg={case_.alg} visualization="2D" width={200} height={160} />
+          <div className="bg-slate-50 rounded-xl p-3 border border-border-subtle flex items-center justify-center h-[230px] w-full">
+            <TwistyPlayer alg={case_.alg} visualization="2D" width="100%" height={210} />
+          </div>
         </div>
 
         {/* 3D animated */}
-        <div className="bg-bg-card border border-border-subtle rounded-2xl p-6 flex flex-col items-center gap-2 shadow-sm">
+        <div className="bg-bg-card border border-border-subtle rounded-2xl p-6 flex flex-col items-center gap-2 shadow-xs">
           <div className="text-xs text-text-muted font-semibold tracking-wider mb-1">
             3D ANIMATION
           </div>
-          <TwistyPlayer
-            alg={case_.alg}
-            visualization="3D"
-            controlPanel="bottom-row"
-            width={200}
-            height={160}
-          />
+          <div className="bg-slate-900 rounded-xl p-3 border border-slate-800 flex items-center justify-center h-[230px] w-full overflow-hidden">
+            <TwistyPlayer
+              alg={case_.alg}
+              visualization="3D"
+              controlPanel="bottom-row"
+              width="100%"
+              height={230}
+              cameraDistance={5.8}
+            />
+          </div>
         </div>
       </div>
 
       {/* Algorithm Box */}
-      <div className="bg-bg-card border border-border-subtle rounded-2xl p-5 mb-5 shadow-sm">
+      <div className="bg-bg-card border border-border-subtle rounded-2xl p-5 mb-5 shadow-xs">
         <div className="text-xs text-text-muted font-semibold mb-2.5 uppercase tracking-wider">
           Algorithm
         </div>
@@ -79,7 +84,7 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
           <button
             onClick={handleCopy}
             title="Click để copy"
-            className="font-mono text-sm md:text-base text-accent-cyan bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 hover:border-accent-cyan hover:bg-accent-cyan/15 hover:text-cyan-300 transition-all flex-1 text-left select-none break-all cursor-pointer"
+            className="font-mono text-sm md:text-base font-semibold text-accent-cyan bg-slate-50 border border-border-subtle rounded-xl px-4 py-3 hover:border-accent-cyan hover:bg-accent-cyan/10 hover:text-sky-700 transition-all flex-1 text-left select-none break-all cursor-pointer"
           >
             {case_.alg}
           </button>
@@ -87,8 +92,8 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
             onClick={handleCopy}
             className={`px-4 py-3 rounded-xl text-xs font-semibold cursor-pointer transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 border ${
               copied
-                ? 'bg-accent-green/15 text-accent-green border-accent-green/40 shadow-sm'
-                : 'bg-bg-tertiary text-text-secondary border-border-subtle hover:text-accent-green hover:border-accent-green/40 hover:bg-accent-green/10'
+                ? 'bg-accent-green/10 text-accent-green border-accent-green/30 shadow-xs'
+                : 'bg-white text-text-secondary border-border-subtle hover:text-accent-green hover:border-accent-green/30 hover:bg-accent-green/10'
             }`}
           >
             {copied ? '✓ Đã copy' : '⎘ Copy'}
@@ -98,7 +103,7 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
 
       {/* References */}
       {youtubeRef && (
-        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-center gap-3">
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3 shadow-xs">
           <span className="text-xl text-red-500">▶</span>
           <div>
             <div className="text-xs text-text-muted font-semibold">Học từ YouTube</div>
@@ -106,7 +111,7 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
               href={youtubeRef}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-red-400 hover:text-red-300 text-xs font-bold transition-colors"
+              className="text-red-600 hover:text-red-700 text-xs font-bold transition-colors"
             >
               JPerm — OLL Tutorial →
             </a>
@@ -142,8 +147,8 @@ export default function NotesPage() {
                   onClick={() => setFilter(f)}
                   className={`px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-150 ${
                     isActive
-                      ? 'border-accent-blue bg-accent-blue/15 text-accent-blue shadow-sm'
-                      : 'border-border-subtle bg-transparent text-text-muted hover:text-text-primary hover:border-border-active'
+                      ? 'border-accent-blue bg-accent-blue/10 text-accent-blue shadow-xs'
+                      : 'border-border-subtle bg-white text-text-muted hover:text-text-primary hover:border-accent-blue'
                   }`}
                 >
                   {f === 'all' ? 'Tất cả' : f}
@@ -164,16 +169,16 @@ export default function NotesPage() {
                 onClick={() => setSelected(c)}
                 className={`w-full text-left px-3 py-2.5 rounded-xl border-none cursor-pointer mb-1 transition-all duration-150 ${
                   isSelected
-                    ? 'bg-accent-blue/15 text-accent-blue shadow-sm'
-                    : 'bg-transparent text-text-primary hover:bg-bg-hover'
+                    ? 'bg-accent-blue/10 text-accent-blue shadow-xs'
+                    : 'bg-transparent text-text-primary hover:bg-slate-50'
                 }`}
               >
                 <div className="text-xs font-bold flex items-center gap-1.5">
                   <span
                     className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
                       isOll
-                        ? 'bg-accent-blue/20 text-accent-blue'
-                        : 'bg-accent-purple/20 text-accent-purple'
+                        ? 'bg-accent-blue/15 text-accent-blue'
+                        : 'bg-accent-purple/15 text-accent-purple'
                     }`}
                   >
                     {c.type}
@@ -192,7 +197,7 @@ export default function NotesPage() {
       </div>
 
       {/* Main detail */}
-      <div className="flex-1 p-6 md:p-10 overflow-y-auto">
+      <div className="flex-1 p-6 md:p-10 overflow-y-auto bg-bg-primary">
         {selected && <NoteDetail case_={selected} />}
       </div>
     </div>

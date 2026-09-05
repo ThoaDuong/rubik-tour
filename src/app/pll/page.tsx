@@ -16,7 +16,7 @@ export default function PllPage() {
   });
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pb-16">
       {/* Header */}
       <div className="p-6 md:p-10 pb-0">
         <div className="text-accent-purple text-[11px] font-bold tracking-widest uppercase mb-2">
@@ -44,8 +44,8 @@ export default function PllPage() {
               onClick={() => setActiveGroup(g.id)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${
                 isActive
-                  ? 'bg-accent-purple/15 border-accent-purple text-accent-purple shadow-sm'
-                  : 'bg-bg-secondary border-border-subtle text-text-secondary hover:border-accent-purple hover:text-text-primary'
+                  ? 'bg-accent-purple/10 border-accent-purple text-accent-purple shadow-xs'
+                  : 'bg-white border-border-subtle text-text-secondary hover:border-accent-purple hover:text-text-primary'
               }`}
             >
               {g.label}

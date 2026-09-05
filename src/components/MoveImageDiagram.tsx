@@ -2,27 +2,37 @@
 
 /**
  * MoveImageDiagram
- * Shows a cropped portion of the move-notation strip images from /src/images/.
+ * Shows clean diagram images for standard moves and slice/rotations.
  *
- * Image contents:
- *   2.webp  – 6-item strip (CW):  U  D  R  L  F  B
- *   3.webp  – 6-item strip (CCW): U' D' R' L' F' B'
- *   4.webp  – 6-item strip (180°):U2 D2 R2 L2 F2 B2
- *   7.webp  – 3-item strip (Slice):M  E  S
- *   6.jpg   – 4-item strip (Rot): [Ban đầu]  x  y  z
+ * Direct images from 8.webp:
+ *   x, y, z, M, E, S
+ * Strip images:
+ *   2.webp – 6-item strip (CW):  U  D  R  L  F  B
+ *   3.webp – 6-item strip (CCW): U' D' R' L' F' B'
  */
 
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
-// --- Static imports so Next.js can optimise/fingerprint assets ----------
 import img2 from '@/images/2.webp';
 import img3 from '@/images/3.webp';
-import img4 from '@/images/4.webp';
-import img6 from '@/images/6.jpg';
-import img7 from '@/images/7.webp';
+import moveX from '@/images/move_x.webp';
+import moveY from '@/images/move_y.webp';
+import moveZ from '@/images/move_z.webp';
+import moveM from '@/images/move_m.webp';
+import moveE from '@/images/move_e.webp';
+import moveS from '@/images/move_s.webp';
+
+const DIRECT_IMAGES: Record<string, StaticImageData> = {
+  'x': moveX,
+  'y': moveY,
+  'z': moveZ,
+  'M': moveM,
+  'E': moveE,
+  'S': moveS,
+};
 
 type MoveImageConfig = {
-  src: typeof img2;
+  src: StaticImageData;
   total: number;
   index: number;
 };
@@ -32,7 +42,7 @@ const MOVE_CONFIG: Record<string, MoveImageConfig> = {
   'U':  { src: img2, total: 6, index: 0 },
   'D':  { src: img2, total: 6, index: 1 },
   'R':  { src: img2, total: 6, index: 2 },
-  'L':  { src: img2, total: 3, index: 3 },
+  'L':  { src: img2, total: 6, index: 3 },
   'F':  { src: img2, total: 6, index: 4 },
   'B':  { src: img2, total: 6, index: 5 },
   // ── CCW ─────────────────────────────────────
@@ -42,41 +52,35 @@ const MOVE_CONFIG: Record<string, MoveImageConfig> = {
   "L'": { src: img3, total: 6, index: 3 },
   "F'": { src: img3, total: 6, index: 4 },
   "B'": { src: img3, total: 6, index: 5 },
-  // ── 180° ────────────────────────────────────
-  'U2': { src: img4, total: 6, index: 0 },
-  'D2': { src: img4, total: 6, index: 1 },
-  'R2': { src: img4, total: 6, index: 2 },
-  'L2': { src: img4, total: 6, index: 3 },
-  'F2': { src: img4, total: 6, index: 4 },
-  'B2': { src: img4, total: 6, index: 5 },
-  // ── Slice ───────────────────────────────────
-  'M':  { src: img7, total: 3, index: 0 },
-  'E':  { src: img7, total: 3, index: 1 },
-  'S':  { src: img7, total: 3, index: 2 },
-  // ── Rotations ───────────────────────────────
-  'x':  { src: img6, total: 4, index: 1 },
-  "x'": { src: img6, total: 4, index: 1 },
-  'y':  { src: img6, total: 4, index: 2 },
-  "y'": { src: img6, total: 4, index: 2 },
-  'z':  { src: img6, total: 4, index: 3 },
-  "z'": { src: img6, total: 4, index: 3 },
 };
-
-// Wait, notice 'L' in img2 had total: 6! Let's make sure it's total: 6
-MOVE_CONFIG['L'] = { src: img2, total: 6, index: 3 };
 
 interface MoveImageDiagramProps {
   symbol: string;
   size?: number;
 }
 
-export default function MoveImageDiagram({ symbol, size = 140 }: MoveImageDiagramProps) {
+export default function MoveImageDiagram({ symbol, size = 180 }: MoveImageDiagramProps) {
+  if (DIRECT_IMAGES[symbol]) {
+    return (
+      <div
+        className="flex items-center justify-center rounded-xl bg-white overflow-hidden shadow-xs border border-border-subtle p-3 w-full h-full max-w-[200px] max-h-[200px]"
+      >
+        <Image
+          src={DIRECT_IMAGES[symbol]}
+          alt={symbol}
+          className="w-full h-full object-contain"
+          priority
+        />
+      </div>
+    );
+  }
+
   const config = MOVE_CONFIG[symbol];
 
   if (!config) {
     return (
       <div
-        className="flex items-center justify-center rounded-lg bg-bg-tertiary text-text-muted text-xs"
+        className="flex items-center justify-center rounded-lg bg-bg-tertiary text-text-muted text-xs font-mono font-bold"
         style={{ width: size, height: size }}
       >
         {symbol}
@@ -89,7 +93,7 @@ export default function MoveImageDiagram({ symbol, size = 140 }: MoveImageDiagra
 
   return (
     <div
-      className="overflow-hidden rounded-lg relative shrink-0"
+      className="overflow-hidden rounded-xl bg-white border border-border-subtle relative shrink-0 shadow-xs"
       style={{ width: size, height: size }}
     >
       <div
