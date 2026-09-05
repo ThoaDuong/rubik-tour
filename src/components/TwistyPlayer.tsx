@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 interface TwistyPlayerProps {
   alg?: string;
   experimentalSetupAlg?: string;
+  experimentalSetupAnchor?: 'start' | 'end';
+  experimentalStickering?: 'full' | 'OLL' | 'PLL' | string;
   visualization?: '3D' | '2D' | 'experimental-2D-LL' | 'PG3D';
   background?: 'none' | 'checkered' | 'auto';
   controlPanel?: 'none' | 'bottom-row' | 'auto';
@@ -18,6 +20,8 @@ interface TwistyPlayerProps {
 export default function TwistyPlayer({
   alg = '',
   experimentalSetupAlg,
+  experimentalSetupAnchor,
+  experimentalStickering,
   visualization = '3D',
   background = 'none',
   controlPanel = 'none',
@@ -52,6 +56,8 @@ export default function TwistyPlayer({
         const player = new Player({
           alg,
           ...(experimentalSetupAlg ? { experimentalSetupAlg } : {}),
+          ...(experimentalSetupAnchor ? { experimentalSetupAnchor } : {}),
+          ...(experimentalStickering ? { experimentalStickering } : {}),
           visualization,
           background,
           controlPanel,
@@ -81,7 +87,7 @@ export default function TwistyPlayer({
         playerRef.current = null;
       }
     };
-  }, [alg, experimentalSetupAlg, visualization, background, controlPanel, hintFacelets, cameraDistance, styleWidth, styleHeight]);
+  }, [alg, experimentalSetupAlg, experimentalSetupAnchor, experimentalStickering, visualization, background, controlPanel, hintFacelets, cameraDistance, styleWidth, styleHeight]);
 
   if (error) {
     return (
@@ -98,8 +104,11 @@ export default function TwistyPlayer({
   return (
     <div
       ref={containerRef}
-      className={`w-full flex items-center justify-center overflow-hidden ${className}`}
-      style={{ width: styleWidth, height: styleHeight }}
+      className={`twisty-player-container flex items-center justify-center w-full h-full relative ${className}`}
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
     />
   );
 }

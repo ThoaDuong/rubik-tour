@@ -53,7 +53,13 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
             2D TOP VIEW
           </div>
           <div className="bg-slate-50 rounded-xl p-3 border border-border-subtle flex items-center justify-center h-[230px] w-full">
-            <TwistyPlayer alg={case_.alg} visualization="2D" width="100%" height={210} />
+            <TwistyPlayer
+              alg={case_.alg}
+              experimentalSetupAnchor="end"
+              visualization="2D"
+              width="100%"
+              height={210}
+            />
           </div>
         </div>
 
@@ -65,6 +71,7 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
           <div className="bg-slate-900 rounded-xl p-3 border border-slate-800 flex items-center justify-center h-[230px] w-full overflow-hidden">
             <TwistyPlayer
               alg={case_.alg}
+              experimentalSetupAnchor="end"
               visualization="3D"
               controlPanel="bottom-row"
               width="100%"

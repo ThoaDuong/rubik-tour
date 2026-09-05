@@ -50,6 +50,7 @@ export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
       <div className="flex items-center justify-center bg-slate-900 rounded-xl p-3 border border-slate-800 transition-all duration-200 overflow-hidden h-[230px]">
         <TwistyPlayer
           alg={case_.alg || ''}
+          experimentalSetupAnchor="end"
           visualization="3D"
           width="100%"
           height={230}
