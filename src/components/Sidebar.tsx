@@ -3,18 +3,28 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const navItems = [
+interface NavLink {
+  href: string;
+  icon: string;
+  label: string;
+  badge?: string;
+}
+
+interface NavSection {
+  section: string;
+  links: NavLink[];
+}
+
+const navItems: NavSection[] = [
   {
     section: 'Chính',
     links: [
       { href: '/', icon: '🏠', label: 'Dashboard' },
-      { href: '/notes', icon: '📝', label: 'Ghi chú', badge: 'Đang học' },
     ],
   },
   {
     section: 'Thư viện',
     links: [
-      { href: '/moves', icon: '↔️', label: 'Ký hiệu & Chiều quay' },
       { href: '/oll', icon: '🟡', label: 'OLL', badge: '57' },
       { href: '/pll', icon: '🔀', label: 'PLL', badge: '21' },
     ],

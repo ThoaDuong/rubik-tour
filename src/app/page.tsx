@@ -1,13 +1,12 @@
 'use client';
 
-import Link from 'next/link';
+import { useState } from 'react';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import { moves, moveGroups } from '@/data/moves';
+import overviewImg from '@/images/8.webp';
 
-const quickStats = [
-  { label: 'OLL Cases', value: '57', icon: '🟡', href: '/oll', colorClass: 'text-blue-600', hoverBorder: 'hover:border-blue-500' },
-  { label: 'PLL Cases', value: '21', icon: '🔀', href: '/pll', colorClass: 'text-purple-600', hoverBorder: 'hover:border-purple-500' },
-  { label: 'Ký hiệu', value: '16+', icon: '↔️', href: '/moves', colorClass: 'text-sky-600', hoverBorder: 'hover:border-sky-500' },
-  { label: 'Đang học', value: '6', icon: '⭐', href: '/notes', colorClass: 'text-amber-600', hoverBorder: 'hover:border-amber-500' },
-];
+const MoveCard = dynamic(() => import('@/components/MoveCard'), { ssr: false });
 
 const cfopSteps = [
   {
@@ -25,58 +24,38 @@ const cfopSteps = [
   {
     step: 'OLL',
     abbr: '🟡',
-    desc: 'Làm vàng hoàn toàn mặt trên',
+    desc: 'Làm vàng hoàn toàn mặt trên (57 cases)',
     badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
   },
   {
     step: 'PLL',
     abbr: '🔀',
-    desc: 'Hoán vị các piece mặt trên',
+    desc: 'Hoán vị các piece mặt trên (21 cases)',
     badgeClass: 'bg-purple-50 text-purple-800 border-purple-200',
   },
 ];
 
 export default function HomePage() {
+  const [activeGroup, setActiveGroup] = useState('basic');
+
+  const filteredMoves = moves.filter((m) => m.group === activeGroup);
+
   return (
-    <div className="p-6 md:p-10 max-w-5xl mx-auto animate-fade-in pb-16">
-      {/* Hero */}
-      <div className="mb-12">
-        <div className="inline-block bg-accent-blue/10 text-accent-blue text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
-          CFOP Method
+    <div className="animate-fade-in pb-16">
+      {/* Header & Section Phương pháp CFOP */}
+      <div className="p-6 md:p-10 pb-0">
+        <div className="inline-block bg-accent-blue/10 text-accent-blue text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-3">
+          Tổng quan phương pháp
         </div>
-        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight text-slate-900 mb-3">
-          Rubik Hub
-        </h1>
-        <p className="text-text-secondary text-base max-w-lg leading-relaxed">
-          Công thức OLL, PLL và ký hiệu chiều quay — tất cả trong một trang, với minh hoạ 3D tương tác.
-        </p>
-      </div>
-
-      {/* Quick stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-        {quickStats.map((stat) => (
-          <Link
-            key={stat.label}
-            href={stat.href}
-            className={`bg-bg-card border border-border-subtle rounded-2xl p-5 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-xs ${stat.hoverBorder}`}
-          >
-            <div className="text-2xl mb-2">{stat.icon}</div>
-            <div className={`text-3xl font-extrabold tracking-tight ${stat.colorClass}`}>
-              {stat.value}
-            </div>
-            <div className="text-xs text-text-secondary mt-1 font-medium">
-              {stat.label}
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {/* CFOP Steps */}
-      <div className="mb-12">
-        <h2 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4">
+        <h1 className="text-2xl md:text-4xl font-extrabold tracking-tight text-text-primary mb-2">
           Phương pháp CFOP
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        </h1>
+        <p className="text-text-secondary text-sm max-w-2xl leading-relaxed mb-6">
+          Phương pháp giải Rubik 3x3 nâng cao phổ biến nhất thế giới: Cross → F2L → OLL → PLL.
+        </p>
+
+        {/* 4 bước CFOP */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
           {cfopSteps.map((s, i) => (
             <div
               key={s.step}
@@ -95,29 +74,72 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Quick links */}
-      <div>
-        <h2 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4">
-          Bắt đầu nhanh
-        </h2>
-        <div className="flex flex-wrap gap-3">
-          {[
-            { href: '/notes', label: '📝 Xem công thức đang học', primary: true },
-            { href: '/oll', label: '🟡 Thư viện OLL' },
-            { href: '/pll', label: '🔀 Thư viện PLL' },
-            { href: '/moves', label: '↔️ Ký hiệu chiều quay' },
-          ].map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`flex items-center px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
-                link.primary
-                  ? 'bg-accent-blue hover:bg-blue-700 text-white shadow-sm'
-                  : 'bg-white hover:bg-slate-50 text-slate-700 hover:text-slate-900 border border-border-subtle shadow-xs'
-              }`}
-            >
-              {link.label}
-            </Link>
+      <div className="border-t border-border-subtle mx-6 md:mx-10 my-2" />
+
+      {/* Section Ký hiệu & Chiều quay */}
+      <div id="moves" className="pt-4">
+        <div className="px-6 md:px-10">
+          <div className="text-accent-blue text-[11px] font-bold tracking-widest uppercase mb-1">
+            Quy ước
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary">
+            Ký hiệu & Chiều quay
+          </h2>
+          <p className="text-text-secondary text-sm mt-1.5 max-w-xl">
+            Các ký hiệu tiêu chuẩn trong công thức Rubik — xem chiều quay bằng sơ đồ ảnh 2D và minh hoạ 3D tương tác.
+          </p>
+        </div>
+
+        {/* Sơ đồ tổng quan toàn bộ ký hiệu (Image 8.webp) */}
+        <div className="px-6 md:px-10 pt-6">
+          <div className="bg-bg-card border border-border-subtle rounded-2xl p-5 shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-accent-blue" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">
+                  Sơ đồ tổng quan tất cả ký hiệu & chiều quay
+                </h3>
+              </div>
+              <span className="text-[11px] text-text-muted font-medium">
+                6 mặt cơ bản • 2 tầng (wide) • Xoay khối (x, y, z) • Lớp giữa (M, E, S)
+              </span>
+            </div>
+
+            <div className="bg-slate-50/90 rounded-xl p-4 border border-border-subtle flex justify-center items-center overflow-hidden">
+              <Image
+                src={overviewImg}
+                alt="Tổng hợp các ký hiệu Rubik và quy ước chiều quay"
+                priority
+                className="w-full max-w-2xl h-auto object-contain rounded-lg shadow-xs"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Filter tabs */}
+        <div className="px-6 md:px-10 pt-6 flex items-center gap-2 flex-wrap">
+          {moveGroups.map((g) => {
+            const isActive = activeGroup === g.id;
+            return (
+              <button
+                key={g.id}
+                onClick={() => setActiveGroup(g.id)}
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${
+                  isActive
+                    ? 'bg-accent-cyan/10 border-accent-cyan text-accent-cyan shadow-xs'
+                    : 'bg-white border-border-subtle text-text-secondary hover:border-accent-cyan hover:text-text-primary'
+                }`}
+              >
+                {g.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Move grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6 md:p-10 pt-6">
+          {filteredMoves.map((move) => (
+            <MoveCard key={move.symbol} move={move} />
           ))}
         </div>
       </div>
