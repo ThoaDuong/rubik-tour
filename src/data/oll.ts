@@ -5,8 +5,8 @@ export interface OllCase {
   alg: string;
   setupAlg?: string;
   description: string;
-  youtubeRef?: string;
   isLearning?: boolean;
+  isLearned?: boolean;
 }
 
 export const OLL_GROUPS = [
@@ -28,6 +28,7 @@ export const OLL_GROUPS = [
   { id: 'i-shape', label: 'I-Shape' },
   { id: 'corners-oriented', label: 'Corners Oriented' },
   { id: 'learning', label: '⭐ Đang học' },
+  { id: 'learned', label: '✓ Đã thuộc' },
 ];
 
 export const ollCases: OllCase[] = [
@@ -37,8 +38,8 @@ export const ollCases: OllCase[] = [
     "group": "corners",
     "alg": "R U R' U R U2 R'",
     "description": "1 corner vàng hướng lên, 3 cái còn lại nhìn ra ngoài",
-    "youtubeRef": "https://www.youtube.com/watch?v=GhmYBgLoQQg",
-    "isLearning": true
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-antisune",
@@ -46,7 +47,8 @@ export const ollCases: OllCase[] = [
     "group": "corners",
     "alg": "R U2 R' U' R U' R'",
     "description": "Ngược chiều với Sune",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-h",
@@ -54,8 +56,8 @@ export const ollCases: OllCase[] = [
     "group": "corners",
     "alg": "F (R U R' U')3 F'",
     "description": "4 corner đối diện nhau (2 cặp đối)",
-    "youtubeRef": "https://www.youtube.com/watch?v=GhmYBgLoQQg",
-    "isLearning": true
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-pi",
@@ -63,8 +65,8 @@ export const ollCases: OllCase[] = [
     "group": "corners",
     "alg": "R U2 R2 U' R2 U' R2 U2 R",
     "description": "4 corner nhìn ra 2 bên",
-    "youtubeRef": "https://www.youtube.com/watch?v=GhmYBgLoQQg",
-    "isLearning": true
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-l",
@@ -72,8 +74,8 @@ export const ollCases: OllCase[] = [
     "group": "corners",
     "alg": "x (R' U R D') (R' U' R D) x'",
     "description": "2 corner chéo nhau cùng hướng",
-    "youtubeRef": "https://www.youtube.com/watch?v=GhmYBgLoQQg",
-    "isLearning": true
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-t",
@@ -81,8 +83,8 @@ export const ollCases: OllCase[] = [
     "group": "corners",
     "alg": "x (L U R' U') (L' U R U') x'",
     "description": "2 corner cạnh nhau đối diện",
-    "youtubeRef": "https://www.youtube.com/watch?v=GhmYBgLoQQg",
-    "isLearning": true
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-u",
@@ -90,8 +92,8 @@ export const ollCases: OllCase[] = [
     "group": "corners",
     "alg": "R2 D R' U2 R D' R' U2 R'",
     "description": "2 corner cạnh nhau cùng 1 hướng",
-    "youtubeRef": "https://www.youtube.com/watch?v=GhmYBgLoQQg",
-    "isLearning": true
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-dot",
@@ -99,7 +101,8 @@ export const ollCases: OllCase[] = [
     "group": "cross",
     "alg": "R U2 R2 F R F' U2 R' F R F'",
     "description": "Không có edge nào đúng hướng",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-line",
@@ -107,7 +110,8 @@ export const ollCases: OllCase[] = [
     "group": "cross",
     "alg": "F R U R' U' F'",
     "description": "Đường thẳng ngang qua tâm (T-Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-l-shape",
@@ -115,7 +119,8 @@ export const ollCases: OllCase[] = [
     "group": "cross",
     "alg": "f R U R' U' f'",
     "description": "Chữ L (2 edge liền kề, P-Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-ne",
@@ -123,7 +128,8 @@ export const ollCases: OllCase[] = [
     "group": "edges",
     "alg": "R U R' U' R' F R F'",
     "description": "T-Shape (2 cạnh kề lật)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-fish-shape",
@@ -131,7 +137,8 @@ export const ollCases: OllCase[] = [
     "group": "cross",
     "alg": "F R' F' R U R U' R'",
     "description": "Dạng con cá (Mounted Fish)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-2",
@@ -139,7 +146,8 @@ export const ollCases: OllCase[] = [
     "group": "dot",
     "alg": "r U r' U2 r U2 R' U2 R U' r'",
     "description": "Không có cạnh vàng nào hướng lên (Dot)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-3",
@@ -147,7 +155,8 @@ export const ollCases: OllCase[] = [
     "group": "dot",
     "alg": "r' R2 U R' U r U2 r' U M'",
     "description": "Không có cạnh vàng nào hướng lên (Dot)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-4",
@@ -155,7 +164,8 @@ export const ollCases: OllCase[] = [
     "group": "dot",
     "alg": "M U' r U2 r' U' R U' R' M'",
     "description": "Không có cạnh vàng nào hướng lên (Dot)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-5",
@@ -163,7 +173,8 @@ export const ollCases: OllCase[] = [
     "group": "square",
     "alg": "l' U2 L U L' U l",
     "description": "Hình khối vuông góc 2x2 (Square)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-6",
@@ -171,7 +182,8 @@ export const ollCases: OllCase[] = [
     "group": "square",
     "alg": "r U2 R' U' R U' r'",
     "description": "Hình khối vuông góc 2x2 (Square)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-7",
@@ -179,7 +191,8 @@ export const ollCases: OllCase[] = [
     "group": "lightning",
     "alg": "r U R' U R U2 r'",
     "description": "Hình tia sét nhỏ (Small Lightning)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-8",
@@ -187,7 +200,8 @@ export const ollCases: OllCase[] = [
     "group": "lightning",
     "alg": "l' U' L U' L' U2 l",
     "description": "Hình tia sét nhỏ (Small Lightning)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-9",
@@ -195,7 +209,8 @@ export const ollCases: OllCase[] = [
     "group": "fish",
     "alg": "R U R' U' R' F R2 U R' U' F'",
     "description": "Hình con cá (Fish Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-10",
@@ -203,7 +218,8 @@ export const ollCases: OllCase[] = [
     "group": "fish",
     "alg": "R U R' U R' F R F' R U2 R'",
     "description": "Hình con cá (Fish Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-11",
@@ -211,7 +227,8 @@ export const ollCases: OllCase[] = [
     "group": "lightning",
     "alg": "r U R' U R' F R F' R U2 r'",
     "description": "Hình tia sét nhỏ (Small Lightning)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-12",
@@ -219,7 +236,8 @@ export const ollCases: OllCase[] = [
     "group": "lightning",
     "alg": "M' R' U' R U' R' U2 R U' R r'",
     "description": "Hình tia sét nhỏ (Small Lightning)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-13",
@@ -227,7 +245,8 @@ export const ollCases: OllCase[] = [
     "group": "knight",
     "alg": "F U R U' R2 F' R U R U' R'",
     "description": "Hình nước đi quân mã (Knight Move)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-14",
@@ -235,7 +254,8 @@ export const ollCases: OllCase[] = [
     "group": "knight",
     "alg": "R' F R U R' F' R F U' F'",
     "description": "Hình nước đi quân mã (Knight Move)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-15",
@@ -243,7 +263,8 @@ export const ollCases: OllCase[] = [
     "group": "knight",
     "alg": "l' U' l L' U' L U l' U l",
     "description": "Hình nước đi quân mã (Knight Move)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-16",
@@ -251,7 +272,8 @@ export const ollCases: OllCase[] = [
     "group": "knight",
     "alg": "r U r' R U R' U' r U' r'",
     "description": "Hình nước đi quân mã (Knight Move)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-17",
@@ -259,7 +281,8 @@ export const ollCases: OllCase[] = [
     "group": "dot",
     "alg": "F R' F' R2 r' U R U' R' U' M'",
     "description": "Không có cạnh vàng nào hướng lên (Dot)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-18",
@@ -267,7 +290,8 @@ export const ollCases: OllCase[] = [
     "group": "dot",
     "alg": "r U R' U R U2 r' r' U' R U' R' U2 r",
     "description": "Không có cạnh vàng nào hướng lên (Dot)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-19",
@@ -275,7 +299,8 @@ export const ollCases: OllCase[] = [
     "group": "dot",
     "alg": "r' R U R U R' U' M' R' F R F'",
     "description": "Không có cạnh vàng nào hướng lên (Dot)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-20",
@@ -283,7 +308,8 @@ export const ollCases: OllCase[] = [
     "group": "dot",
     "alg": "r U R' U' M2 U R U' R' U' M'",
     "description": "Không có cạnh vàng nào hướng lên (Dot)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-28",
@@ -291,7 +317,8 @@ export const ollCases: OllCase[] = [
     "group": "corners-oriented",
     "alg": "r U R' U' r' R U R U' R'",
     "description": "4 góc vàng đã hướng lên (Corners Oriented)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-29",
@@ -299,7 +326,8 @@ export const ollCases: OllCase[] = [
     "group": "awkward",
     "alg": "R U R' U' R U' R' F' U' F R U R'",
     "description": "Hình ziczac / thế góc lệch (Awkward)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-30",
@@ -307,7 +335,8 @@ export const ollCases: OllCase[] = [
     "group": "awkward",
     "alg": "F R' F R2 U' R' U' R U R' F2",
     "description": "Hình ziczac / thế góc lệch (Awkward)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-31",
@@ -315,7 +344,8 @@ export const ollCases: OllCase[] = [
     "group": "p-shape",
     "alg": "R' U' F U R U' R' F' R",
     "description": "Hình chữ P",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-32",
@@ -323,7 +353,8 @@ export const ollCases: OllCase[] = [
     "group": "p-shape",
     "alg": "L U F' U' L' U L F L'",
     "description": "Hình chữ P",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-34",
@@ -331,7 +362,8 @@ export const ollCases: OllCase[] = [
     "group": "c-shape",
     "alg": "R U R2 U' R' F R U R U' F'",
     "description": "Hình chữ C",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-35",
@@ -339,7 +371,8 @@ export const ollCases: OllCase[] = [
     "group": "fish",
     "alg": "R U2 R' R' F R F' R U2 R'",
     "description": "Hình con cá (Fish Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-36",
@@ -347,7 +380,8 @@ export const ollCases: OllCase[] = [
     "group": "w-shape",
     "alg": "L' U' L U' L' U L U L F' L' F",
     "description": "Hình chữ W",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-38",
@@ -355,7 +389,8 @@ export const ollCases: OllCase[] = [
     "group": "w-shape",
     "alg": "R U R' U R U' R' U' R' F R F'",
     "description": "Hình chữ W",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-39",
@@ -363,7 +398,8 @@ export const ollCases: OllCase[] = [
     "group": "lightning",
     "alg": "L F' L' U' L U F U' L'",
     "description": "Hình tia sét lớn (Big Lightning)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-40",
@@ -371,7 +407,8 @@ export const ollCases: OllCase[] = [
     "group": "lightning",
     "alg": "R' F R U R' U' F' U R",
     "description": "Hình tia sét lớn (Big Lightning)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-41",
@@ -379,7 +416,8 @@ export const ollCases: OllCase[] = [
     "group": "awkward",
     "alg": "R U R' U R U2 R' F R U R' U' F'",
     "description": "Hình ziczac / thế góc lệch (Awkward)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-42",
@@ -387,7 +425,8 @@ export const ollCases: OllCase[] = [
     "group": "awkward",
     "alg": "R' U' R U' R' U2 R F R U R' U' F'",
     "description": "Hình ziczac / thế góc lệch (Awkward)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-43",
@@ -395,7 +434,8 @@ export const ollCases: OllCase[] = [
     "group": "p-shape",
     "alg": "F' U' L' U L F",
     "description": "Hình chữ P",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-46",
@@ -403,7 +443,8 @@ export const ollCases: OllCase[] = [
     "group": "c-shape",
     "alg": "R' U' R' F R F' U R",
     "description": "Hình chữ C",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-47",
@@ -411,7 +452,8 @@ export const ollCases: OllCase[] = [
     "group": "l-shape",
     "alg": "R' U' R' F R F' R' F R F' U R",
     "description": "Hình chữ L nhỏ (Small L)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-48",
@@ -419,7 +461,8 @@ export const ollCases: OllCase[] = [
     "group": "l-shape",
     "alg": "F R U R' U' R U R' U' F'",
     "description": "Hình chữ L nhỏ (Small L)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-49",
@@ -427,7 +470,8 @@ export const ollCases: OllCase[] = [
     "group": "l-shape",
     "alg": "r U' r2 U r2 U r2 U' r",
     "description": "Hình chữ L nhỏ (Small L)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-50",
@@ -435,7 +479,8 @@ export const ollCases: OllCase[] = [
     "group": "l-shape",
     "alg": "r' U r2 U' r2 U' r2 U r'",
     "description": "Hình chữ L nhỏ (Small L)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-51",
@@ -443,7 +488,8 @@ export const ollCases: OllCase[] = [
     "group": "i-shape",
     "alg": "F U R U' R' U R U' R' F'",
     "description": "Hình thanh thẳng (I-Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-52",
@@ -451,7 +497,8 @@ export const ollCases: OllCase[] = [
     "group": "i-shape",
     "alg": "R U R' U R U' B U' B' R'",
     "description": "Hình thanh thẳng (I-Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-53",
@@ -459,7 +506,8 @@ export const ollCases: OllCase[] = [
     "group": "l-shape",
     "alg": "l' U2 L U L' U' L U L' U l",
     "description": "Hình chữ L nhỏ (Small L)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-54",
@@ -467,7 +515,8 @@ export const ollCases: OllCase[] = [
     "group": "l-shape",
     "alg": "(r U2 R' U') R U R' U' R U' r'",
     "description": "Hình chữ L nhỏ (Small L)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-55",
@@ -475,7 +524,8 @@ export const ollCases: OllCase[] = [
     "group": "i-shape",
     "alg": "R' F R U R U' R2 F' R2 U' R' U R U R'",
     "description": "Hình thanh thẳng (I-Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-56",
@@ -483,7 +533,8 @@ export const ollCases: OllCase[] = [
     "group": "i-shape",
     "alg": "(r' U' r) U' R' U R U' R' U R r' U r",
     "description": "Hình thanh thẳng (I-Shape)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   },
   {
     "id": "oll-57",
@@ -491,6 +542,7 @@ export const ollCases: OllCase[] = [
     "group": "corners-oriented",
     "alg": "R U R' U' M' U R U' r'",
     "description": "4 góc vàng đã hướng lên (Corners Oriented)",
-    "isLearning": false
+    "isLearning": false,
+    "isLearned": false
   }
 ];

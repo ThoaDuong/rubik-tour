@@ -4,6 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { OllCase } from '@/data/oll';
 import { PllCase } from '@/data/pll';
+import { useLearningStatus } from '@/hooks/useLearningStatus';
 
 const TwistyPlayer = dynamic(() => import('./TwistyPlayer'), { ssr: false });
 
@@ -14,6 +15,11 @@ interface AlgCardProps {
 
 export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
   const [copied, setCopied] = useState(false);
+  const { getStatus, toggleLearning, toggleLearned } = useLearningStatus();
+
+  const status = getStatus(case_.id);
+  const isLearning = status === 'learning';
+  const isLearned = status === 'learned';
 
   const handleCopy = async () => {
     if (!case_.alg) return;
@@ -27,23 +33,50 @@ export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
     ? 'bg-accent-blue/10 text-accent-blue'
     : 'bg-accent-purple/10 text-accent-purple';
 
-  const youtubeRef = 'youtubeRef' in case_ ? case_.youtubeRef : undefined;
-  const isLearning = case_.isLearning;
+  // Dynamic card border & background based on status
+  let cardBorderClass =
+    'border border-border-subtle hover:border-accent-blue hover:shadow-lg hover:shadow-accent-blue/5 hover:-translate-y-0.5 shadow-xs';
+  if (isLearning) {
+    cardBorderClass =
+      'border-2 border-amber-400 ring-2 ring-amber-400/20 shadow-md shadow-amber-400/5 hover:-translate-y-0.5 bg-amber-500/[0.015]';
+  } else if (isLearned) {
+    cardBorderClass =
+      'border-2 border-emerald-500 ring-2 ring-emerald-500/20 shadow-md shadow-emerald-500/5 hover:-translate-y-0.5 bg-emerald-500/[0.015]';
+  }
 
   return (
-    <div className="bg-bg-card border border-border-subtle rounded-2xl p-5 hover:border-accent-blue hover:shadow-lg hover:shadow-accent-blue/5 hover:-translate-y-0.5 transition-all duration-200 flex flex-col gap-3.5 animate-fade-in shadow-xs">
+    <div
+      className={`bg-bg-card rounded-2xl p-5 transition-all duration-200 flex flex-col gap-3.5 animate-fade-in ${cardBorderClass}`}
+    >
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
-        <div>
-          <div className="text-base font-bold text-text-primary flex items-center gap-1.5">
-            {isLearning && <span title="Đang học" className="text-sm">⭐</span>}
-            {case_.name}
+        <div className="flex-1 min-w-0">
+          <div className="text-base font-bold text-text-primary flex items-center gap-1.5 flex-wrap">
+            {isLearning && (
+              <span title="Đang học" className="text-base shrink-0 animate-pulse">
+                ⭐
+              </span>
+            )}
+            {isLearned && (
+              <span
+                title="Đã thuộc"
+                className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-black shrink-0"
+              >
+                ✓
+              </span>
+            )}
+            <span className="truncate">{case_.name}</span>
           </div>
           <div className="text-xs text-text-secondary mt-0.5">{case_.description}</div>
         </div>
-        <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider uppercase ${groupBadgeClass}`}>
-          {type.toUpperCase()}
-        </span>
+
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span
+            className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase ${groupBadgeClass}`}
+          >
+            {type.toUpperCase()}
+          </span>
+        </div>
       </div>
 
       {/* Cube preview - animated 3D player by default */}
@@ -82,23 +115,37 @@ export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
         </button>
       </div>
 
-      {/* Footer */}
-      <div className="flex items-center gap-2 flex-wrap pt-1 min-h-[26px]">
-        {'probability' in case_ && (
-          <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-accent-cyan/10 text-accent-cyan">
-            P: {(case_ as PllCase).probability}
-          </span>
-        )}
-        {youtubeRef && (
-          <a
-            href={youtubeRef}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-red-500 hover:text-red-600 text-[11px] font-semibold flex items-center gap-1 transition-colors ml-auto"
-          >
-            ▶ YouTube
-          </a>
-        )}
+      {/* Footer: Learning toggle buttons */}
+      <div className="flex items-center justify-between gap-2 flex-wrap pt-1 min-h-[30px]">
+        <div className="flex items-center gap-2">
+          {/* Status buttons: [ ⭐ Học ] [ ✓ Thuộc ] */}
+          <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200/80">
+            <button
+              onClick={() => toggleLearning(case_.id)}
+              title={isLearning ? 'Bỏ trạng thái đang học' : 'Đánh dấu đang học (⭐ Viền vàng)'}
+              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1 transition-all cursor-pointer ${
+                isLearning
+                  ? 'bg-amber-400 text-slate-900 shadow-xs'
+                  : 'text-slate-600 hover:text-amber-700 hover:bg-white'
+              }`}
+            >
+              <span>⭐</span>
+              <span>Đang học</span>
+            </button>
+            <button
+              onClick={() => toggleLearned(case_.id)}
+              title={isLearned ? 'Bỏ trạng thái đã thuộc' : 'Đánh dấu đã thuộc (✓ Viền xanh)'}
+              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1 transition-all cursor-pointer ${
+                isLearned
+                  ? 'bg-emerald-500 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-emerald-700 hover:bg-white'
+              }`}
+            >
+              <span>✓</span>
+              <span>Đã thuộc</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

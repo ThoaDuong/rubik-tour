@@ -3,17 +3,27 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { pllCases, PLL_GROUPS } from '@/data/pll';
+import { useLearningStatus } from '@/hooks/useLearningStatus';
 
 const AlgCard = dynamic(() => import('@/components/AlgCard'), { ssr: false });
 
 export default function PllPage() {
   const [activeGroup, setActiveGroup] = useState('all');
+  const { getStatus, isMounted } = useLearningStatus();
 
   const filtered = pllCases.filter((c) => {
     if (activeGroup === 'all') return true;
-    if (activeGroup === 'learning') return c.isLearning;
+    if (activeGroup === 'learning') return getStatus(c.id) === 'learning';
+    if (activeGroup === 'learned') return getStatus(c.id) === 'learned';
     return c.group === activeGroup;
   });
+
+  const learningCount = isMounted
+    ? pllCases.filter((c) => getStatus(c.id) === 'learning').length
+    : 0;
+  const learnedCount = isMounted
+    ? pllCases.filter((c) => getStatus(c.id) === 'learned').length
+    : 0;
 
   return (
     <div className="animate-fade-in pb-16">
@@ -25,12 +35,16 @@ export default function PllPage() {
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary">
           PLL — Permutation of Last Layer
         </h2>
-        <p className="text-text-secondary text-sm mt-1.5">
-          Hoán vị các piece mặt trên. {pllCases.length} cases, xác suất mỗi case tương ứng.{' '}
-          <span className="text-accent-purple font-semibold">
-            {pllCases.filter((c) => c.isLearning).length} đang học
+        <p className="text-text-secondary text-sm mt-1.5 flex items-center gap-2 flex-wrap">
+          <span>Hoán vị các piece mặt trên. {pllCases.length} cases</span>
+          <span>•</span>
+          <span className="text-amber-600 font-semibold flex items-center gap-1">
+            ⭐ {learningCount} đang học
           </span>
-          .
+          <span>•</span>
+          <span className="text-emerald-600 font-semibold flex items-center gap-1">
+            ✓ {learnedCount} đã thuộc
+          </span>
         </p>
       </div>
 
@@ -38,23 +52,35 @@ export default function PllPage() {
       <div className="px-6 md:px-10 pt-5 flex items-center gap-2 flex-wrap">
         {PLL_GROUPS.map((g) => {
           const isActive = activeGroup === g.id;
+          let count: number | null = null;
+          if (g.id === 'learning') {
+            count = learningCount;
+          } else if (g.id === 'learned') {
+            count = learnedCount;
+          } else if (g.id !== 'all') {
+            count = pllCases.filter((c) => c.group === g.id).length;
+          }
+
+          let activeStyle = 'bg-accent-purple/10 border-accent-purple text-accent-purple shadow-xs';
+          if (g.id === 'learning') {
+            activeStyle = 'bg-amber-400/15 border-amber-400 text-amber-700 shadow-xs';
+          } else if (g.id === 'learned') {
+            activeStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-700 shadow-xs';
+          }
+
           return (
             <button
               key={g.id}
               onClick={() => setActiveGroup(g.id)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${
                 isActive
-                  ? 'bg-accent-purple/10 border-accent-purple text-accent-purple shadow-xs'
+                  ? activeStyle
                   : 'bg-white border-border-subtle text-text-secondary hover:border-accent-purple hover:text-text-primary'
               }`}
             >
               {g.label}
-              {g.id !== 'all' && (
-                <span className="ml-1 opacity-70">
-                  ({g.id === 'learning'
-                    ? pllCases.filter((c) => c.isLearning).length
-                    : pllCases.filter((c) => c.group === g.id).length})
-                </span>
+              {count !== null && (
+                <span className="ml-1 opacity-70">({count})</span>
               )}
             </button>
           );

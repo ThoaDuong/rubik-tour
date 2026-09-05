@@ -4,8 +4,8 @@ export interface PllCase {
   group: string;
   alg: string;
   description: string;
-  probability: string;
   isLearning?: boolean;
+  isLearned?: boolean;
 }
 
 export const PLL_GROUPS = [
@@ -14,6 +14,7 @@ export const PLL_GROUPS = [
   { id: 'edges', label: 'Edge' },
   { id: 'both', label: 'Corner + Edge' },
   { id: 'learning', label: '⭐ Đang học' },
+  { id: 'learned', label: '✓ Đã thuộc' },
 ];
 
 export const pllCases: PllCase[] = [
@@ -23,8 +24,8 @@ export const pllCases: PllCase[] = [
     group: 'corners',
     alg: "x L2 D2 L' U' L D2 L' U L' x'",
     description: 'Adjacent corner swap (A-perm A)',
-    probability: '1/18',
-    isLearning: true,
+    isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-ab',
@@ -32,8 +33,8 @@ export const pllCases: PllCase[] = [
     group: 'corners',
     alg: "x' L2 D2 L U L' D2 L U' L x",
     description: 'Adjacent corner swap (A-perm B)',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-f',
@@ -41,8 +42,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R",
     description: 'Swap 2 corners + 2 edges (F-perm)',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-ga',
@@ -50,8 +51,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R2 U R' U R' U' R U' R2 U' D R' U R D'",
     description: 'G-perm A',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-gb',
@@ -59,8 +60,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R' U' R U D' R2 U R' U R U' R U' R2 D",
     description: 'G-perm B',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-gc',
@@ -68,8 +69,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R2 U' R U' R U R' U R2 U D' R U' R' D",
     description: 'G-perm C',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-gd',
@@ -77,8 +78,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R U R' U' D R2 U' R U' R' U R' U R2 D'",
     description: 'G-perm D',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-ja',
@@ -86,8 +87,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "L' U' L F L' U' L U L F' L2 U L U",
     description: 'J-perm A',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-jb',
@@ -95,8 +96,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R U R' F' R U R' U' R' F R2 U' R' U'",
     description: 'J-perm B',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-ra',
@@ -104,8 +105,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R U' R' U' R U R D R' U' R D' R' U2 R'",
     description: 'R-perm A',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-rb',
@@ -113,8 +114,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R2 F R U R U' R' F' R U2 R' U2 R",
     description: 'R-perm B',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-t',
@@ -122,8 +123,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R U R' U' R' F R2 U' R' U' R U R' F'",
     description: 'Swap 2 corners + 2 edges (T-perm)',
-    probability: '1/18',
-    isLearning: true,
+    isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-e',
@@ -131,8 +132,8 @@ export const pllCases: PllCase[] = [
     group: 'corners',
     alg: "x' L' U L D' L' U' L D L' U' L D' L' U L D x",
     description: 'Diagonal corner swap (E-perm)',
-    probability: '1/36',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-na',
@@ -140,8 +141,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R U R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R'",
     description: 'Diagonal corner + 2 opposite edge swaps (N-perm A)',
-    probability: '1/72',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-nb',
@@ -149,8 +150,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R' U R U' R' F' U' F R U R' F R' F' R U' R",
     description: 'Diagonal corner + 2 opposite edge swaps (N-perm B)',
-    probability: '1/72',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-v',
@@ -158,8 +159,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "R' U R' U' R D' R' D R' U D' R2 U' R2 D R2",
     description: 'Diagonal corner + 2 adjacent edge swaps (V-perm)',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-y',
@@ -167,8 +168,8 @@ export const pllCases: PllCase[] = [
     group: 'both',
     alg: "F R U' R' U' R U R' F' R U R' U' R' F R F'",
     description: 'Diagonal corner + 2 adjacent edge swaps (Y-perm)',
-    probability: '1/18',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-h',
@@ -176,8 +177,8 @@ export const pllCases: PllCase[] = [
     group: 'edges',
     alg: "M2 U M2 U2 M2 U M2",
     description: 'Swap all 4 edges opposite (H-perm)',
-    probability: '1/72',
     isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-ua',
@@ -185,8 +186,8 @@ export const pllCases: PllCase[] = [
     group: 'edges',
     alg: "M2 U M U2 M' U M2",
     description: '3-edge cycle CCW (U-perm A)',
-    probability: '1/18',
-    isLearning: true,
+    isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-ub',
@@ -194,8 +195,8 @@ export const pllCases: PllCase[] = [
     group: 'edges',
     alg: "M2 U' M U2 M' U' M2",
     description: '3-edge cycle CW (U-perm B)',
-    probability: '1/18',
-    isLearning: true,
+    isLearning: false,
+    isLearned: false,
   },
   {
     id: 'pll-z',
@@ -203,7 +204,7 @@ export const pllCases: PllCase[] = [
     group: 'edges',
     alg: "M' U M2 U M2 U M' U2 M2",
     description: 'Swap 4 edges adjacent pairs (Z-perm)',
-    probability: '1/36',
     isLearning: false,
+    isLearned: false,
   },
 ];

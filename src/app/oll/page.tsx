@@ -3,17 +3,27 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { ollCases, OLL_GROUPS } from '@/data/oll';
+import { useLearningStatus } from '@/hooks/useLearningStatus';
 
 const AlgCard = dynamic(() => import('@/components/AlgCard'), { ssr: false });
 
 export default function OllPage() {
   const [activeGroup, setActiveGroup] = useState('all');
+  const { getStatus, isMounted } = useLearningStatus();
 
   const filtered = ollCases.filter((c) => {
     if (activeGroup === 'all') return true;
-    if (activeGroup === 'learning') return c.isLearning;
+    if (activeGroup === 'learning') return getStatus(c.id) === 'learning';
+    if (activeGroup === 'learned') return getStatus(c.id) === 'learned';
     return c.group === activeGroup;
   });
+
+  const learningCount = isMounted
+    ? ollCases.filter((c) => getStatus(c.id) === 'learning').length
+    : 0;
+  const learnedCount = isMounted
+    ? ollCases.filter((c) => getStatus(c.id) === 'learned').length
+    : 0;
 
   return (
     <div className="animate-fade-in pb-16">
@@ -25,12 +35,16 @@ export default function OllPage() {
         <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary">
           OLL — Orientation of Last Layer
         </h2>
-        <p className="text-text-secondary text-sm mt-1.5">
-          Làm vàng hoàn toàn mặt trên. {ollCases.length} cases, trong đó{' '}
-          <span className="text-accent-blue font-semibold">
-            {ollCases.filter((c) => c.isLearning).length} đang học
+        <p className="text-text-secondary text-sm mt-1.5 flex items-center gap-2 flex-wrap">
+          <span>Làm vàng hoàn toàn mặt trên. {ollCases.length} cases</span>
+          <span>•</span>
+          <span className="text-amber-600 font-semibold flex items-center gap-1">
+            ⭐ {learningCount} đang học
           </span>
-          .
+          <span>•</span>
+          <span className="text-emerald-600 font-semibold flex items-center gap-1">
+            ✓ {learnedCount} đã thuộc
+          </span>
         </p>
       </div>
 
@@ -38,23 +52,35 @@ export default function OllPage() {
       <div className="px-6 md:px-10 pt-5 flex items-center gap-2 flex-wrap">
         {OLL_GROUPS.map((g) => {
           const isActive = activeGroup === g.id;
+          let count: number | null = null;
+          if (g.id === 'learning') {
+            count = learningCount;
+          } else if (g.id === 'learned') {
+            count = learnedCount;
+          } else if (g.id !== 'all') {
+            count = ollCases.filter((c) => c.group === g.id).length;
+          }
+
+          let activeStyle = 'bg-accent-blue/10 border-accent-blue text-accent-blue shadow-xs';
+          if (g.id === 'learning') {
+            activeStyle = 'bg-amber-400/15 border-amber-400 text-amber-700 shadow-xs';
+          } else if (g.id === 'learned') {
+            activeStyle = 'bg-emerald-500/15 border-emerald-500 text-emerald-700 shadow-xs';
+          }
+
           return (
             <button
               key={g.id}
               onClick={() => setActiveGroup(g.id)}
               className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${
                 isActive
-                  ? 'bg-accent-blue/10 border-accent-blue text-accent-blue shadow-xs'
+                  ? activeStyle
                   : 'bg-white border-border-subtle text-text-secondary hover:border-accent-blue hover:text-text-primary'
               }`}
             >
               {g.label}
-              {g.id !== 'all' && (
-                <span className="ml-1 opacity-70">
-                  ({g.id === 'learning'
-                    ? ollCases.filter((c) => c.isLearning).length
-                    : ollCases.filter((c) => c.group === g.id).length})
-                </span>
+              {count !== null && (
+                <span className="ml-1 opacity-70">({count})</span>
               )}
             </button>
           );
