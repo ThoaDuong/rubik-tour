@@ -23,9 +23,7 @@ import img7 from '@/images/7.webp';
 
 type MoveImageConfig = {
   src: typeof img2;
-  /** Total items in the strip */
   total: number;
-  /** 0-based index of this move in the strip */
   index: number;
 };
 
@@ -34,7 +32,7 @@ const MOVE_CONFIG: Record<string, MoveImageConfig> = {
   'U':  { src: img2, total: 6, index: 0 },
   'D':  { src: img2, total: 6, index: 1 },
   'R':  { src: img2, total: 6, index: 2 },
-  'L':  { src: img2, total: 6, index: 3 },
+  'L':  { src: img2, total: 3, index: 3 },
   'F':  { src: img2, total: 6, index: 4 },
   'B':  { src: img2, total: 6, index: 5 },
   // ── CCW ─────────────────────────────────────
@@ -57,41 +55,29 @@ const MOVE_CONFIG: Record<string, MoveImageConfig> = {
   'S':  { src: img7, total: 3, index: 2 },
   // ── Rotations ───────────────────────────────
   'x':  { src: img6, total: 4, index: 1 },
-  "x'": { src: img6, total: 4, index: 1 }, // no prime image – reuse x
+  "x'": { src: img6, total: 4, index: 1 },
   'y':  { src: img6, total: 4, index: 2 },
-  "y'": { src: img6, total: 4, index: 2 }, // reuse y
+  "y'": { src: img6, total: 4, index: 2 },
   'z':  { src: img6, total: 4, index: 3 },
-  "z'": { src: img6, total: 4, index: 3 }, // reuse z
+  "z'": { src: img6, total: 4, index: 3 },
 };
+
+// Wait, notice 'L' in img2 had total: 6! Let's make sure it's total: 6
+MOVE_CONFIG['L'] = { src: img2, total: 6, index: 3 };
 
 interface MoveImageDiagramProps {
   symbol: string;
-  /** Display size in px (width = height) */
   size?: number;
 }
 
-/**
- * Crops a single cell out of a horizontal image strip using overflow:hidden +
- * negative translateX so only the target column is visible.
- */
 export default function MoveImageDiagram({ symbol, size = 140 }: MoveImageDiagramProps) {
   const config = MOVE_CONFIG[symbol];
 
   if (!config) {
-    // Fallback: generic cube overview image
     return (
       <div
-        style={{
-          width: size,
-          height: size,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 8,
-          background: 'var(--bg-tertiary)',
-          color: 'var(--text-muted)',
-          fontSize: 12,
-        }}
+        className="flex items-center justify-center rounded-lg bg-bg-tertiary text-text-muted text-xs"
+        style={{ width: size, height: size }}
       >
         {symbol}
       </div>
@@ -99,28 +85,18 @@ export default function MoveImageDiagram({ symbol, size = 140 }: MoveImageDiagra
   }
 
   const { src, total, index } = config;
-
-  // We render the full strip at (total * size) wide inside a (size) container,
-  // then shift it left by (index * size) to show only the target cell.
   const stripWidth = total * size;
 
   return (
     <div
-      style={{
-        width: size,
-        height: size,
-        overflow: 'hidden',
-        borderRadius: 8,
-        position: 'relative',
-        flexShrink: 0,
-      }}
+      className="overflow-hidden rounded-lg relative shrink-0"
+      style={{ width: size, height: size }}
     >
       <div
+        className="absolute top-0"
         style={{
           width: stripWidth,
           height: size,
-          position: 'absolute',
-          top: 0,
           left: -(index * size),
         }}
       >
@@ -129,11 +105,7 @@ export default function MoveImageDiagram({ symbol, size = 140 }: MoveImageDiagra
           alt={symbol}
           width={stripWidth}
           height={size}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'fill',
-          }}
+          className="w-full h-full object-fill"
           priority
         />
       </div>

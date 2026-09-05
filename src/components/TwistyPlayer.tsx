@@ -78,19 +78,11 @@ export default function TwistyPlayer({
   if (error) {
     return (
       <div
-        style={{
-          width,
-          height,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'var(--text-muted)',
-          fontSize: '12px',
-          textAlign: 'center',
-        }}
+        className="flex flex-col items-center justify-center text-text-muted text-xs text-center"
+        style={{ width, height }}
       >
-        🎲<br />
-        <span style={{ fontSize: '10px', marginTop: 4 }}>Cube preview<br />unavailable</span>
+        <span className="text-base">🎲</span>
+        <span className="text-[10px] mt-1 leading-tight">Cube preview<br />unavailable</span>
       </div>
     );
   }

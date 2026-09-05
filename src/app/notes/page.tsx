@@ -13,7 +13,7 @@ const learningCases = [
   ...pllCases.filter((c) => c.isLearning).map((c) => ({ ...c, type: 'PLL' as const })),
 ];
 
-type LearningCase = typeof learningCases[0];
+type LearningCase = (typeof learningCases)[0];
 
 function NoteDetail({ case_ }: { case_: LearningCase }) {
   const [copied, setCopied] = useState(false);
@@ -25,108 +25,71 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
   };
 
   const youtubeRef = 'youtubeRef' in case_ ? case_.youtubeRef : undefined;
-  const accentColor = case_.type === 'OLL' ? 'var(--accent-blue)' : 'var(--accent-purple)';
+  const isOll = case_.type === 'OLL';
+  const badgeClass = isOll
+    ? 'bg-accent-blue/15 text-accent-blue'
+    : 'bg-accent-purple/15 text-accent-purple';
 
   return (
-    <div style={{ animation: 'fadeIn 0.3s ease both' }}>
+    <div className="animate-fade-in max-w-3xl">
       {/* Header */}
-      <div style={{ marginBottom: 32 }}>
-        <div style={{
-          display: 'inline-block',
-          background: case_.type === 'OLL' ? 'var(--accent-blue-dim)' : 'var(--accent-purple-dim)',
-          color: accentColor,
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: '0.1em',
-          padding: '3px 10px',
-          borderRadius: 20,
-          marginBottom: 12,
-        }}>
+      <div className="mb-8">
+        <div
+          className={`inline-block text-[11px] font-bold tracking-widest uppercase px-2.5 py-0.5 rounded-full mb-3 ${badgeClass}`}
+        >
           {case_.type}
         </div>
-        <h2 style={{
-          fontSize: 32,
-          fontWeight: 800,
-          letterSpacing: '-0.03em',
-          color: 'var(--text-primary)',
-          marginBottom: 6,
-        }}>
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-text-primary mb-1.5">
           {case_.name}
         </h2>
-        <p style={{ color: 'var(--text-secondary)' }}>{case_.description}</p>
+        <p className="text-text-secondary text-sm">{case_.description}</p>
       </div>
 
-      {/* Cube + Alg */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 20,
-        marginBottom: 28,
-      }}>
+      {/* Cube + Alg previews */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-7">
         {/* 2D preview */}
-        <div style={{
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-color)',
-          borderRadius: 'var(--radius-lg)',
-          padding: 24,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 8,
-        }}>
-          <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600, marginBottom: 4 }}>2D TOP VIEW</div>
+        <div className="bg-bg-card border border-border-subtle rounded-2xl p-6 flex flex-col items-center gap-2 shadow-sm">
+          <div className="text-xs text-text-muted font-semibold tracking-wider mb-1">
+            2D TOP VIEW
+          </div>
           <TwistyPlayer alg={case_.alg} visualization="2D" width={200} height={160} />
         </div>
 
         {/* 3D animated */}
-        <div style={{
-          background: 'var(--bg-card)',
-          border: '1px solid var(--border-color)',
-          borderRadius: 'var(--radius-lg)',
-          padding: 24,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 8,
-        }}>
-          <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600, marginBottom: 4 }}>3D ANIMATION</div>
-          <TwistyPlayer alg={case_.alg} visualization="3D" controlPanel="bottom-row" width={200} height={160} />
+        <div className="bg-bg-card border border-border-subtle rounded-2xl p-6 flex flex-col items-center gap-2 shadow-sm">
+          <div className="text-xs text-text-muted font-semibold tracking-wider mb-1">
+            3D ANIMATION
+          </div>
+          <TwistyPlayer
+            alg={case_.alg}
+            visualization="3D"
+            controlPanel="bottom-row"
+            width={200}
+            height={160}
+          />
         </div>
       </div>
 
-      {/* Algorithm */}
-      <div style={{
-        background: 'var(--bg-card)',
-        border: '1px solid var(--border-color)',
-        borderRadius: 'var(--radius-lg)',
-        padding: 20,
-        marginBottom: 20,
-      }}>
-        <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600, marginBottom: 10, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+      {/* Algorithm Box */}
+      <div className="bg-bg-card border border-border-subtle rounded-2xl p-5 mb-5 shadow-sm">
+        <div className="text-xs text-text-muted font-semibold mb-2.5 uppercase tracking-wider">
           Algorithm
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div className="flex items-center gap-2.5">
           <button
-            className="algo-text"
             onClick={handleCopy}
-            style={{ flex: 1, textAlign: 'left', fontSize: 16, padding: '10px 16px' }}
+            title="Click để copy"
+            className="font-mono text-sm md:text-base text-accent-cyan bg-bg-primary border border-border-subtle rounded-xl px-4 py-3 hover:border-accent-cyan hover:bg-accent-cyan/15 hover:text-cyan-300 transition-all flex-1 text-left select-none break-all cursor-pointer"
           >
             {case_.alg}
           </button>
           <button
             onClick={handleCopy}
-            style={{
-              background: copied ? 'var(--accent-green-dim)' : 'var(--bg-tertiary)',
-              border: `1px solid ${copied ? 'var(--accent-green)' : 'var(--border-color)'}`,
-              color: copied ? 'var(--accent-green)' : 'var(--text-secondary)',
-              borderRadius: 'var(--radius-md)',
-              padding: '10px 16px',
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.18s ease',
-              whiteSpace: 'nowrap',
-            }}
+            className={`px-4 py-3 rounded-xl text-xs font-semibold cursor-pointer transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 border ${
+              copied
+                ? 'bg-accent-green/15 text-accent-green border-accent-green/40 shadow-sm'
+                : 'bg-bg-tertiary text-text-secondary border-border-subtle hover:text-accent-green hover:border-accent-green/40 hover:bg-accent-green/10'
+            }`}
           >
             {copied ? '✓ Đã copy' : '⎘ Copy'}
           </button>
@@ -135,23 +98,15 @@ function NoteDetail({ case_ }: { case_: LearningCase }) {
 
       {/* References */}
       {youtubeRef && (
-        <div style={{
-          background: 'rgba(239,68,68,0.08)',
-          border: '1px solid rgba(239,68,68,0.2)',
-          borderRadius: 'var(--radius-md)',
-          padding: '14px 18px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-        }}>
-          <span style={{ fontSize: 20 }}>▶</span>
+        <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4 flex items-center gap-3">
+          <span className="text-xl text-red-500">▶</span>
           <div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>Học từ YouTube</div>
+            <div className="text-xs text-text-muted font-semibold">Học từ YouTube</div>
             <a
               href={youtubeRef}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: '#ef4444', fontSize: 13, fontWeight: 600, textDecoration: 'none' }}
+              className="text-red-400 hover:text-red-300 text-xs font-bold transition-colors"
             >
               JPerm — OLL Tutorial →
             </a>
@@ -169,102 +124,75 @@ export default function NotesPage() {
   const visible = learningCases.filter((c) => filter === 'all' || c.type === filter);
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div className="flex flex-col md:flex-row min-h-screen animate-fade-in">
       {/* Notes sidebar */}
-      <div style={{
-        width: 260,
-        background: 'var(--bg-secondary)',
-        borderRight: '1px solid var(--border-color)',
-        display: 'flex',
-        flexDirection: 'column',
-        flexShrink: 0,
-      }}>
+      <div className="w-full md:w-64 bg-bg-secondary border-b md:border-b-0 md:border-r border-border-subtle flex flex-col shrink-0">
         {/* Header */}
-        <div style={{ padding: '24px 16px 16px', borderBottom: '1px solid var(--border-color)' }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12 }}>
+        <div className="p-5 pb-4 border-b border-border-subtle">
+          <div className="text-xs font-bold text-text-primary mb-3">
             ⭐ Đang học ({learningCases.length})
           </div>
           {/* Filter tabs */}
-          <div style={{ display: 'flex', gap: 6 }}>
-            {(['all', 'OLL', 'PLL'] as const).map((f) => (
-              <button
-                key={f}
-                onClick={() => setFilter(f)}
-                style={{
-                  padding: '4px 10px',
-                  borderRadius: 20,
-                  border: '1px solid',
-                  borderColor: filter === f ? 'var(--accent-blue)' : 'var(--border-color)',
-                  background: filter === f ? 'var(--accent-blue-dim)' : 'transparent',
-                  color: filter === f ? 'var(--accent-blue)' : 'var(--text-muted)',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                }}
-              >
-                {f === 'all' ? 'Tất cả' : f}
-              </button>
-            ))}
+          <div className="flex gap-1.5">
+            {(['all', 'OLL', 'PLL'] as const).map((f) => {
+              const isActive = filter === f;
+              return (
+                <button
+                  key={f}
+                  onClick={() => setFilter(f)}
+                  className={`px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-150 ${
+                    isActive
+                      ? 'border-accent-blue bg-accent-blue/15 text-accent-blue shadow-sm'
+                      : 'border-border-subtle bg-transparent text-text-muted hover:text-text-primary hover:border-border-active'
+                  }`}
+                >
+                  {f === 'all' ? 'Tất cả' : f}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Case list */}
-        <div style={{ flex: 1, overflow: 'auto', padding: '12px 8px' }}>
-          {visible.map((c) => (
-            <button
-              key={c.id}
-              onClick={() => setSelected(c)}
-              style={{
-                width: '100%',
-                textAlign: 'left',
-                padding: '10px 12px',
-                borderRadius: 'var(--radius-md)',
-                border: 'none',
-                background: selected.id === c.id ? 'var(--accent-blue-dim)' : 'transparent',
-                cursor: 'pointer',
-                marginBottom: 2,
-                transition: 'all 0.15s ease',
-              }}
-            >
-              <div style={{
-                fontSize: 13,
-                fontWeight: 700,
-                color: selected.id === c.id ? 'var(--accent-blue)' : 'var(--text-primary)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-              }}>
-                <span style={{
-                  fontSize: 10,
-                  fontWeight: 700,
-                  background: c.type === 'OLL' ? 'var(--accent-blue-dim)' : 'var(--accent-purple-dim)',
-                  color: c.type === 'OLL' ? 'var(--accent-blue)' : 'var(--accent-purple)',
-                  padding: '1px 6px',
-                  borderRadius: 10,
-                }}>
-                  {c.type}
-                </span>
-                {c.name}
-              </div>
-              <div style={{
-                fontSize: 11,
-                color: 'var(--text-muted)',
-                fontFamily: 'var(--font-mono)',
-                marginTop: 3,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}>
-                {c.alg}
-              </div>
-            </button>
-          ))}
+        <div className="flex-1 overflow-y-auto p-2">
+          {visible.map((c) => {
+            const isSelected = selected.id === c.id;
+            const isOll = c.type === 'OLL';
+            return (
+              <button
+                key={c.id}
+                onClick={() => setSelected(c)}
+                className={`w-full text-left px-3 py-2.5 rounded-xl border-none cursor-pointer mb-1 transition-all duration-150 ${
+                  isSelected
+                    ? 'bg-accent-blue/15 text-accent-blue shadow-sm'
+                    : 'bg-transparent text-text-primary hover:bg-bg-hover'
+                }`}
+              >
+                <div className="text-xs font-bold flex items-center gap-1.5">
+                  <span
+                    className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
+                      isOll
+                        ? 'bg-accent-blue/20 text-accent-blue'
+                        : 'bg-accent-purple/20 text-accent-purple'
+                    }`}
+                  >
+                    {c.type}
+                  </span>
+                  <span className={isSelected ? 'text-accent-blue' : 'text-text-primary'}>
+                    {c.name}
+                  </span>
+                </div>
+                <div className="text-[11px] text-text-muted font-mono mt-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                  {c.alg}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Main detail */}
-      <div style={{ flex: 1, padding: 40, overflow: 'auto' }}>
+      <div className="flex-1 p-6 md:p-10 overflow-y-auto">
         {selected && <NoteDetail case_={selected} />}
       </div>
     </div>

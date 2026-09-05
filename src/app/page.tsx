@@ -3,10 +3,10 @@
 import Link from 'next/link';
 
 const quickStats = [
-  { label: 'OLL Cases', value: '57', icon: '🟡', href: '/oll', color: 'var(--accent-blue)' },
-  { label: 'PLL Cases', value: '21', icon: '🔀', href: '/pll', color: 'var(--accent-purple)' },
-  { label: 'Ký hiệu', value: '16+', icon: '↔️', href: '/moves', color: 'var(--accent-cyan)' },
-  { label: 'Đang học', value: '6', icon: '⭐', href: '/notes', color: 'var(--accent-orange)' },
+  { label: 'OLL Cases', value: '57', icon: '🟡', href: '/oll', colorClass: 'text-accent-blue', hoverBorder: 'hover:border-accent-blue' },
+  { label: 'PLL Cases', value: '21', icon: '🔀', href: '/pll', colorClass: 'text-accent-purple', hoverBorder: 'hover:border-accent-purple' },
+  { label: 'Ký hiệu', value: '16+', icon: '↔️', href: '/moves', colorClass: 'text-accent-cyan', hoverBorder: 'hover:border-accent-cyan' },
+  { label: 'Đang học', value: '6', icon: '⭐', href: '/notes', colorClass: 'text-accent-orange', hoverBorder: 'hover:border-accent-orange' },
 ];
 
 const cfopSteps = [
@@ -15,150 +15,85 @@ const cfopSteps = [
     abbr: '✚',
     desc: 'Tạo dấu thập trắng ở mặt dưới',
     color: '#f1f5f9',
-    bg: 'rgba(241,245,249,0.1)',
+    badgeClass: 'bg-white/10 text-slate-100 border-white/20',
   },
   {
     step: 'F2L',
     abbr: 'F2L',
     desc: 'Điền 4 cặp slot dưới cùng',
     color: '#22c55e',
-    bg: 'rgba(34,197,94,0.1)',
+    badgeClass: 'bg-accent-green/10 text-accent-green border-accent-green/30',
   },
   {
     step: 'OLL',
     abbr: '🟡',
     desc: 'Làm vàng hoàn toàn mặt trên',
     color: '#fbbf24',
-    bg: 'rgba(251,191,36,0.1)',
+    badgeClass: 'bg-yellow-400/10 text-yellow-400 border-yellow-400/30',
   },
   {
     step: 'PLL',
     abbr: '🔀',
     desc: 'Hoán vị các piece mặt trên',
     color: '#a855f7',
-    bg: 'rgba(168,85,247,0.1)',
+    badgeClass: 'bg-accent-purple/10 text-accent-purple border-accent-purple/30',
   },
 ];
 
 export default function HomePage() {
   return (
-    <div style={{ padding: '40px', maxWidth: 1000 }}>
+    <div className="p-6 md:p-10 max-w-5xl mx-auto animate-fade-in">
       {/* Hero */}
-      <div style={{ marginBottom: 48 }}>
-        <div style={{
-          display: 'inline-block',
-          background: 'var(--accent-blue-dim)',
-          color: 'var(--accent-blue)',
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          padding: '4px 12px',
-          borderRadius: 20,
-          marginBottom: 16,
-        }}>
+      <div className="mb-12">
+        <div className="inline-block bg-accent-blue/15 text-accent-blue text-[11px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4">
           CFOP Method
         </div>
-        <h1 style={{
-          fontSize: 40,
-          fontWeight: 800,
-          letterSpacing: '-0.04em',
-          lineHeight: 1.2,
-          background: 'linear-gradient(135deg, #e8eaf6 0%, #9095b0 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          marginBottom: 12,
-        }}>
+        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight bg-gradient-to-br from-[#e8eaf6] to-[#9095b0] bg-clip-text text-transparent mb-3">
           Rubik Hub
         </h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 16, maxWidth: 500 }}>
+        <p className="text-text-secondary text-base max-w-lg leading-relaxed">
           Công thức OLL, PLL và ký hiệu chiều quay — tất cả trong một trang, với minh hoạ 3D tương tác.
         </p>
       </div>
 
       {/* Quick stats */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: 16,
-        marginBottom: 48,
-      }}>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
         {quickStats.map((stat) => (
           <Link
             key={stat.label}
             href={stat.href}
-            style={{ textDecoration: 'none' }}
+            className={`bg-bg-card border border-border-subtle rounded-2xl p-5 hover:shadow-[0_0_20px_rgba(79,90,255,0.25)] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer ${stat.hoverBorder}`}
           >
-            <div style={{
-              background: 'var(--bg-card)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 'var(--radius-lg)',
-              padding: '20px',
-              transition: 'all 0.2s ease',
-              cursor: 'pointer',
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLDivElement).style.borderColor = stat.color;
-              (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--border-color)';
-              (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
-            }}
-            >
-              <div style={{ fontSize: 28, marginBottom: 8 }}>{stat.icon}</div>
-              <div style={{ fontSize: 32, fontWeight: 800, color: stat.color, letterSpacing: '-0.03em' }}>
-                {stat.value}
-              </div>
-              <div style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 2 }}>
-                {stat.label}
-              </div>
+            <div className="text-2xl mb-2">{stat.icon}</div>
+            <div className={`text-3xl font-extrabold tracking-tight ${stat.colorClass}`}>
+              {stat.value}
+            </div>
+            <div className="text-xs text-text-secondary mt-1 font-medium">
+              {stat.label}
             </div>
           </Link>
         ))}
       </div>
 
       {/* CFOP Steps */}
-      <div style={{ marginBottom: 48 }}>
-        <h2 style={{
-          fontSize: 16,
-          fontWeight: 700,
-          color: 'var(--text-secondary)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          marginBottom: 16,
-        }}>
+      <div className="mb-12">
+        <h2 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4">
           Phương pháp CFOP
         </h2>
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {cfopSteps.map((s, i) => (
             <div
               key={s.step}
-              style={{
-                flex: 1,
-                background: s.bg,
-                border: `1px solid ${s.color}33`,
-                borderRadius: 'var(--radius-md)',
-                padding: '16px',
-                position: 'relative',
-              }}
+              className={`border rounded-xl p-4 relative ${s.badgeClass}`}
             >
               {i < cfopSteps.length - 1 && (
-                <div style={{
-                  position: 'absolute',
-                  right: -18,
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: 'var(--text-muted)',
-                  fontSize: 20,
-                  zIndex: 2,
-                }}>
+                <div className="hidden lg:block absolute -right-3.5 top-1/2 -translate-y-1/2 text-text-muted text-lg z-10">
                   →
                 </div>
               )}
-              <div style={{ fontSize: 22, marginBottom: 6 }}>{s.abbr}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: s.color }}>{s.step}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{s.desc}</div>
+              <div className="text-xl mb-1.5 font-bold">{s.abbr}</div>
+              <div className="text-sm font-bold">{s.step}</div>
+              <div className="text-xs text-text-muted mt-1 leading-normal">{s.desc}</div>
             </div>
           ))}
         </div>
@@ -166,17 +101,10 @@ export default function HomePage() {
 
       {/* Quick links */}
       <div>
-        <h2 style={{
-          fontSize: 16,
-          fontWeight: 700,
-          color: 'var(--text-secondary)',
-          textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          marginBottom: 16,
-        }}>
+        <h2 className="text-xs font-bold text-text-muted uppercase tracking-wider mb-4">
           Bắt đầu nhanh
         </h2>
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div className="flex flex-wrap gap-3">
           {[
             { href: '/notes', label: '📝 Xem công thức đang học', primary: true },
             { href: '/oll', label: '🟡 Thư viện OLL' },
@@ -186,19 +114,11 @@ export default function HomePage() {
             <Link
               key={link.href}
               href={link.href}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: '10px 18px',
-                borderRadius: 'var(--radius-md)',
-                fontSize: 13,
-                fontWeight: 600,
-                textDecoration: 'none',
-                transition: 'all 0.18s ease',
-                background: link.primary ? 'var(--accent-blue)' : 'var(--bg-card)',
-                color: link.primary ? '#fff' : 'var(--text-secondary)',
-                border: `1px solid ${link.primary ? 'transparent' : 'var(--border-color)'}`,
-              }}
+              className={`flex items-center px-4 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 ${
+                link.primary
+                  ? 'bg-accent-blue hover:bg-indigo-600 text-white shadow-md shadow-accent-blue/20 hover:shadow-accent-blue/35'
+                  : 'bg-bg-card hover:bg-bg-hover text-text-secondary hover:text-text-primary border border-border-subtle hover:border-border-active'
+              }`}
             >
               {link.label}
             </Link>

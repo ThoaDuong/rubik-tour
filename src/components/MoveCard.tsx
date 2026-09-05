@@ -12,63 +12,40 @@ interface MoveCardProps {
 }
 
 export default function MoveCard({ move }: MoveCardProps) {
-  // 3D is now the default interactive view
+  // 3D is default interactive view
   const [view3D, setView3D] = useState(true);
 
   return (
-    <div className="move-card">
+    <div className="bg-bg-card border border-border-subtle rounded-2xl p-5 hover:border-border-active hover:shadow-[0_0_20px_rgba(79,90,255,0.25)] hover:-translate-y-0.5 transition-all duration-200 animate-fade-in">
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 6 }}>
+      <div className="flex justify-between items-start mb-2">
         <div>
-          <div className="move-card-symbol" style={{ color: move.color }}>
+          <div className="font-mono text-3xl font-bold leading-none mb-1.5" style={{ color: move.color }}>
             {move.symbol}
           </div>
-          <div className="move-card-name">{move.name}</div>
+          <div className="text-xs font-semibold text-text-primary">{move.name}</div>
         </div>
 
         {/* 3D / 2D Toggle Button */}
         <button
           onClick={() => setView3D((v) => !v)}
-          style={{
-            background: !view3D ? 'var(--accent-blue-dim)' : 'var(--bg-primary)',
-            border: `1px solid ${!view3D ? 'var(--accent-blue)' : 'var(--border-color)'}`,
-            color: !view3D ? 'var(--accent-blue)' : 'var(--text-secondary)',
-            borderRadius: '20px',
-            fontSize: '11px',
-            fontWeight: 600,
-            padding: '4px 10px',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 4,
-          }}
+          className={`rounded-full text-[11px] font-semibold px-2.5 py-1 border transition-all duration-200 flex items-center gap-1 cursor-pointer ${
+            !view3D
+              ? 'bg-accent-blue/15 border-accent-blue text-accent-blue shadow-sm'
+              : 'bg-bg-primary border-border-subtle text-text-secondary hover:text-text-primary hover:border-border-active'
+          }`}
           title={view3D ? 'Xem sơ đồ 2D' : 'Xem mô hình 3D tương tác'}
         >
           {view3D ? '◀ Sơ đồ 2D' : '▶ 3D Demo'}
         </button>
       </div>
 
-      <div className="move-card-desc">{move.description}</div>
+      <div className="text-xs text-text-muted mb-3.5 leading-relaxed min-h-[32px]">{move.description}</div>
 
       {/* Visual Display Container */}
-      <div
-        style={{
-          background: 'var(--bg-primary)',
-          borderRadius: 'var(--radius-md)',
-          border: '1px solid var(--border-color)',
-          minHeight: 160,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '12px 8px',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
+      <div className="bg-bg-primary rounded-xl border border-border-subtle min-h-[160px] flex flex-col items-center justify-center p-3 relative overflow-hidden">
         {view3D ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <div className="flex flex-col items-center w-full">
             <TwistyPlayer
               alg={move.alg}
               visualization="3D"
@@ -76,33 +53,21 @@ export default function MoveCard({ move }: MoveCardProps) {
               width={160}
               height={140}
             />
-            <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: 4 }}>
+            <div className="text-[10px] text-text-muted mt-1 font-medium">
               Nhấn Play để xem mặt xoay
             </div>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          <div className="flex flex-col items-center w-full">
             <MoveImageDiagram symbol={move.symbol} size={150} />
-            <div
-              style={{
-                marginTop: 6,
-                fontSize: '11px',
-                color: 'var(--text-muted)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-              }}
-            >
+            <div className="mt-2 text-[11px] text-text-muted flex items-center gap-1.5">
               <span
-                style={{
-                  display: 'inline-block',
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  background: move.color,
-                }}
+                className="inline-block w-2 h-2 rounded-full shrink-0"
+                style={{ background: move.color }}
               />
-              <span>Mặt {move.face} — {move.direction === 'cw' ? 'Thuận chiều kim' : move.direction === 'ccw' ? 'Ngược chiều kim' : '180°'}</span>
+              <span>
+                Mặt {move.face} — {move.direction === 'cw' ? 'Thuận chiều kim' : move.direction === 'ccw' ? 'Ngược chiều kim' : '180°'}
+              </span>
             </div>
           </div>
         )}

@@ -16,13 +16,18 @@ export default function PllPage() {
   });
 
   return (
-    <>
-      <div className="page-header">
-        <div className="page-header-tag">Thư viện</div>
-        <h2>PLL — Permutation of Last Layer</h2>
-        <p>
+    <div className="animate-fade-in">
+      {/* Header */}
+      <div className="p-6 md:p-10 pb-0">
+        <div className="text-accent-purple text-[11px] font-bold tracking-widest uppercase mb-2">
+          Thư viện
+        </div>
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary">
+          PLL — Permutation of Last Layer
+        </h2>
+        <p className="text-text-secondary text-sm mt-1.5">
           Hoán vị các piece mặt trên. {pllCases.length} cases, xác suất mỗi case tương ứng.{' '}
-          <span style={{ color: 'var(--accent-purple)', fontWeight: 600 }}>
+          <span className="text-accent-purple font-semibold">
             {pllCases.filter((c) => c.isLearning).length} đang học
           </span>
           .
@@ -30,43 +35,43 @@ export default function PllPage() {
       </div>
 
       {/* Filter */}
-      <div className="filter-bar">
-        {PLL_GROUPS.map((g) => (
-          <button
-            key={g.id}
-            className={`filter-btn ${activeGroup === g.id ? 'active' : ''}`}
-            onClick={() => setActiveGroup(g.id)}
-            style={
-              activeGroup === g.id
-                ? { background: 'var(--accent-purple-dim)', borderColor: 'var(--accent-purple)', color: 'var(--accent-purple)' }
-                : {}
-            }
-          >
-            {g.label}
-            {g.id !== 'all' && (
-              <span style={{ marginLeft: 4, opacity: 0.6 }}>
-                ({g.id === 'learning'
-                  ? pllCases.filter((c) => c.isLearning).length
-                  : pllCases.filter((c) => c.group === g.id).length})
-              </span>
-            )}
-          </button>
-        ))}
+      <div className="px-6 md:px-10 pt-5 flex items-center gap-2 flex-wrap">
+        {PLL_GROUPS.map((g) => {
+          const isActive = activeGroup === g.id;
+          return (
+            <button
+              key={g.id}
+              onClick={() => setActiveGroup(g.id)}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${
+                isActive
+                  ? 'bg-accent-purple/15 border-accent-purple text-accent-purple shadow-sm'
+                  : 'bg-bg-secondary border-border-subtle text-text-secondary hover:border-accent-purple hover:text-text-primary'
+              }`}
+            >
+              {g.label}
+              {g.id !== 'all' && (
+                <span className="ml-1 opacity-70">
+                  ({g.id === 'learning'
+                    ? pllCases.filter((c) => c.isLearning).length
+                    : pllCases.filter((c) => c.group === g.id).length})
+                </span>
+              )}
+            </button>
+          );
+        })}
       </div>
 
       {/* Grid */}
-      <div className="cards-grid">
-        {filtered.map((c, i) => (
-          <div key={c.id} style={{ animationDelay: `${i * 0.04}s` }}>
-            <AlgCard case_={c} type="pll" />
-          </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6 md:p-10 pt-6">
+        {filtered.map((c) => (
+          <AlgCard key={c.id} case_={c} type="pll" />
         ))}
         {filtered.length === 0 && (
-          <div style={{ color: 'var(--text-muted)', padding: '40px 0', gridColumn: '1 / -1' }}>
+          <div className="text-text-muted py-10 col-span-full text-center">
             Không có case nào trong nhóm này.
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
