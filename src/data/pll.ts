@@ -13,8 +13,8 @@ export const PLL_GROUPS = [
   { id: 'corners', label: 'Corner' },
   { id: 'edges', label: 'Edge' },
   { id: 'both', label: 'Corner + Edge' },
-  { id: 'learning', label: '⭐ Đang học' },
-  { id: 'learned', label: '✓ Đã thuộc' },
+  { id: 'learning', label: 'Đang học' },
+  { id: 'learned', label: 'Đã thuộc' },
 ];
 
 export const pllCases: PllCase[] = [

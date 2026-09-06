@@ -4,6 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { MoveNotation } from '@/data/moves';
 import MoveImageDiagram from './MoveImageDiagram';
+import { CubeIcon, PhotoIcon } from './Icons';
 
 const TwistyPlayer = dynamic(() => import('./TwistyPlayer'), { ssr: false });
 
@@ -39,14 +40,24 @@ export default function MoveCard({ move }: MoveCardProps) {
         {/* 3D / 2D Toggle Button */}
         <button
           onClick={() => setView3D((v) => !v)}
-          className={`rounded-full text-[11px] font-semibold px-2.5 py-1 border transition-all duration-200 flex items-center gap-1 cursor-pointer ${
+          className={`rounded-full text-[11px] font-semibold px-2.5 py-1 border transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
             !view3D
               ? 'bg-accent-blue/10 border-accent-blue text-accent-blue shadow-xs'
               : 'bg-white border-border-subtle text-text-secondary hover:text-text-primary hover:border-accent-blue'
           }`}
           title={view3D ? 'Xem sơ đồ 2D' : 'Xem mô hình 3D'}
         >
-          {view3D ? '◀ Sơ đồ 2D' : '▶ 3D Demo'}
+          {view3D ? (
+            <>
+              <PhotoIcon className="w-3.5 h-3.5" />
+              <span>Sơ đồ 2D</span>
+            </>
+          ) : (
+            <>
+              <CubeIcon className="w-3.5 h-3.5" />
+              <span>3D Demo</span>
+            </>
+          )}
         </button>
       </div>
 

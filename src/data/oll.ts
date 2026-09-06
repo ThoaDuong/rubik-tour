@@ -27,8 +27,8 @@ export const OLL_GROUPS = [
   { id: 'l-shape', label: 'L-Shape' },
   { id: 'i-shape', label: 'I-Shape' },
   { id: 'corners-oriented', label: 'Corners Oriented' },
-  { id: 'learning', label: '⭐ Đang học' },
-  { id: 'learned', label: '✓ Đã thuộc' },
+  { id: 'learning', label: 'Đang học' },
+  { id: 'learned', label: 'Đã thuộc' },
 ];
 
 export const ollCases: OllCase[] = [

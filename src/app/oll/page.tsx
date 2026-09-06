@@ -4,6 +4,7 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { ollCases, OLL_GROUPS } from '@/data/oll';
 import { useLearningStatus } from '@/hooks/useLearningStatus';
+import { StarIconSolid, CheckIconSolid } from '@/components/Icons';
 
 const AlgCard = dynamic(() => import('@/components/AlgCard'), { ssr: false });
 
@@ -38,12 +39,14 @@ export default function OllPage() {
         <p className="text-text-secondary text-sm mt-1.5 flex items-center gap-2 flex-wrap">
           <span>Làm vàng hoàn toàn mặt trên. {ollCases.length} cases</span>
           <span>•</span>
-          <span className="text-amber-600 font-semibold flex items-center gap-1">
-            ⭐ {learningCount} đang học
+          <span className="text-amber-600 font-semibold flex items-center gap-1.5">
+            <StarIconSolid className="w-4 h-4 text-amber-500 shrink-0" />
+            <span>{learningCount} đang học</span>
           </span>
           <span>•</span>
-          <span className="text-emerald-600 font-semibold flex items-center gap-1">
-            ✓ {learnedCount} đã thuộc
+          <span className="text-emerald-600 font-semibold flex items-center gap-1.5">
+            <CheckIconSolid className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span>{learnedCount} đã thuộc</span>
           </span>
         </p>
       </div>
@@ -72,15 +75,21 @@ export default function OllPage() {
             <button
               key={g.id}
               onClick={() => setActiveGroup(g.id)}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 flex items-center gap-1.5 ${
                 isActive
                   ? activeStyle
                   : 'bg-white border-border-subtle text-text-secondary hover:border-accent-blue hover:text-text-primary'
               }`}
             >
-              {g.label}
+              {g.id === 'learning' && (
+                <StarIconSolid className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+              )}
+              {g.id === 'learned' && (
+                <CheckIconSolid className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              )}
+              <span>{g.label}</span>
               {count !== null && (
-                <span className="ml-1 opacity-70">({count})</span>
+                <span className="opacity-70">({count})</span>
               )}
             </button>
           );

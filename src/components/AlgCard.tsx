@@ -5,6 +5,12 @@ import dynamic from 'next/dynamic';
 import { OllCase } from '@/data/oll';
 import { PllCase } from '@/data/pll';
 import { useLearningStatus } from '@/hooks/useLearningStatus';
+import {
+  StarIconSolid,
+  CheckIcon,
+  CheckIconSolid,
+  ClipboardDocumentIcon,
+} from '@/components/Icons';
 
 const TwistyPlayer = dynamic(() => import('./TwistyPlayer'), { ssr: false });
 
@@ -53,16 +59,17 @@ export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
         <div className="flex-1 min-w-0">
           <div className="text-base font-bold text-text-primary flex items-center gap-1.5 flex-wrap">
             {isLearning && (
-              <span title="Đang học" className="text-base shrink-0 animate-pulse">
-                ⭐
-              </span>
+              <StarIconSolid
+                title="Đang học"
+                className="w-4 h-4 text-amber-500 shrink-0 animate-pulse"
+              />
             )}
             {isLearned && (
               <span
                 title="Đã thuộc"
-                className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-black shrink-0"
+                className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-emerald-500 text-white shrink-0 shadow-xs"
               >
-                ✓
+                <CheckIconSolid className="w-2.5 h-2.5" />
               </span>
             )}
             <span className="truncate">{case_.name}</span>
@@ -103,7 +110,7 @@ export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
           {case_.alg || '—'}
         </button>
         <button
-          className={`p-2 rounded-lg text-sm flex items-center gap-1 border border-border-subtle transition-all cursor-pointer ${
+          className={`p-2 rounded-lg text-sm flex items-center justify-center border border-border-subtle transition-all cursor-pointer ${
             copied
               ? 'text-accent-green bg-accent-green/10 border-accent-green/30 shadow-xs'
               : 'text-text-muted bg-white hover:text-accent-green hover:bg-accent-green/10 hover:border-accent-green/30'
@@ -111,37 +118,49 @@ export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
           onClick={handleCopy}
           title={copied ? 'Đã copy!' : 'Copy'}
         >
-          {copied ? '✓' : '⎘'}
+          {copied ? (
+            <CheckIcon className="w-4 h-4 text-emerald-600 stroke-2" />
+          ) : (
+            <ClipboardDocumentIcon className="w-4 h-4" />
+          )}
         </button>
       </div>
 
       {/* Footer: Learning toggle buttons */}
       <div className="flex items-center justify-between gap-2 flex-wrap pt-1 min-h-[30px]">
         <div className="flex items-center gap-2">
-          {/* Status buttons: [ ⭐ Học ] [ ✓ Thuộc ] */}
+          {/* Status buttons: [ ⭐ Đang học ] [ ✓ Đã thuộc ] */}
           <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200/80">
             <button
               onClick={() => toggleLearning(case_.id)}
-              title={isLearning ? 'Bỏ trạng thái đang học' : 'Đánh dấu đang học (⭐ Viền vàng)'}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1 transition-all cursor-pointer ${
+              title={isLearning ? 'Bỏ trạng thái đang học' : 'Đánh dấu đang học (Viền vàng)'}
+              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                 isLearning
                   ? 'bg-amber-400 text-slate-900 shadow-xs'
                   : 'text-slate-600 hover:text-amber-700 hover:bg-white'
               }`}
             >
-              <span>⭐</span>
+              <StarIconSolid
+                className={`w-3.5 h-3.5 shrink-0 ${
+                  isLearning ? 'text-slate-900' : 'text-amber-500'
+                }`}
+              />
               <span>Đang học</span>
             </button>
             <button
               onClick={() => toggleLearned(case_.id)}
-              title={isLearned ? 'Bỏ trạng thái đã thuộc' : 'Đánh dấu đã thuộc (✓ Viền xanh)'}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1 transition-all cursor-pointer ${
+              title={isLearned ? 'Bỏ trạng thái đã thuộc' : 'Đánh dấu đã thuộc (Viền xanh)'}
+              className={`px-2.5 py-1 rounded-md text-[11px] font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                 isLearned
                   ? 'bg-emerald-500 text-white shadow-xs'
                   : 'text-slate-600 hover:text-emerald-700 hover:bg-white'
               }`}
             >
-              <span>✓</span>
+              <CheckIconSolid
+                className={`w-3.5 h-3.5 shrink-0 ${
+                  isLearned ? 'text-white' : 'text-emerald-600'
+                }`}
+              />
               <span>Đã thuộc</span>
             </button>
           </div>

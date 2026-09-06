@@ -3,8 +3,8 @@ import './globals.css';
 import Sidebar from '@/components/Sidebar';
 
 export const metadata: Metadata = {
-  title: 'Rubik Hub — Công thức & Kỹ thuật',
-  description: 'Website học Rubik: Ghi chú công thức OLL/PLL, ký hiệu chiều quay, thư viện đầy đủ 57 OLL + 21 PLL với ảnh minh hoạ 3D.',
+  title: 'T-Rubik — Công thức & Kỹ thuật',
+  description: 'T-Rubik: Website học Rubik 3x3 phương pháp CFOP, thư viện 57 OLL + 21 PLL với mô hình 3D tương tác.',
 };
 
 export default function RootLayout({

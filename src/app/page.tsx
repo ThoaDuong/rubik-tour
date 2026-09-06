@@ -5,33 +5,44 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { moves, moveGroups } from '@/data/moves';
 import overviewImg from '@/images/8.webp';
+import {
+  PlusIcon,
+  Squares2X2Icon,
+  SunIcon,
+  ArrowsRightLeftIcon,
+  ArrowRightIcon,
+} from '@/components/Icons';
 
 const MoveCard = dynamic(() => import('@/components/MoveCard'), { ssr: false });
 
 const cfopSteps = [
   {
     step: 'Cross',
-    abbr: '✚',
+    Icon: PlusIcon,
     desc: 'Tạo dấu thập trắng ở mặt dưới',
     badgeClass: 'bg-slate-100 text-slate-800 border-slate-200',
+    iconColor: 'text-slate-700',
   },
   {
     step: 'F2L',
-    abbr: 'F2L',
+    Icon: Squares2X2Icon,
     desc: 'Điền 4 cặp slot dưới cùng',
     badgeClass: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+    iconColor: 'text-emerald-700',
   },
   {
     step: 'OLL',
-    abbr: '🟡',
+    Icon: SunIcon,
     desc: 'Làm vàng hoàn toàn mặt trên (57 cases)',
     badgeClass: 'bg-amber-50 text-amber-800 border-amber-200',
+    iconColor: 'text-amber-600',
   },
   {
     step: 'PLL',
-    abbr: '🔀',
+    Icon: ArrowsRightLeftIcon,
     desc: 'Hoán vị các piece mặt trên (21 cases)',
     badgeClass: 'bg-purple-50 text-purple-800 border-purple-200',
+    iconColor: 'text-purple-700',
   },
 ];
 
@@ -56,21 +67,26 @@ export default function HomePage() {
 
         {/* 4 bước CFOP */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
-          {cfopSteps.map((s, i) => (
-            <div
-              key={s.step}
-              className={`border rounded-xl p-4 relative shadow-xs ${s.badgeClass}`}
-            >
-              {i < cfopSteps.length - 1 && (
-                <div className="hidden lg:block absolute -right-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg z-10">
-                  →
+          {cfopSteps.map((s, i) => {
+            const Icon = s.Icon;
+            return (
+              <div
+                key={s.step}
+                className={`border rounded-xl p-4 relative shadow-xs ${s.badgeClass}`}
+              >
+                {i < cfopSteps.length - 1 && (
+                  <div className="hidden lg:flex absolute -right-3.5 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-white border border-border-subtle items-center justify-center shadow-xs">
+                    <ArrowRightIcon className="w-3.5 h-3.5 text-slate-400" />
+                  </div>
+                )}
+                <div className="mb-2">
+                  <Icon className={`w-6 h-6 ${s.iconColor}`} />
                 </div>
-              )}
-              <div className="text-xl mb-1.5 font-bold">{s.abbr}</div>
-              <div className="text-sm font-bold">{s.step}</div>
-              <div className="text-xs opacity-80 mt-1 leading-normal">{s.desc}</div>
-            </div>
-          ))}
+                <div className="text-sm font-bold">{s.step}</div>
+                <div className="text-xs opacity-80 mt-1 leading-normal">{s.desc}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
