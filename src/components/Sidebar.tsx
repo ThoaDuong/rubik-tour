@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import logoImg from '@/images/t-rubik.png';
-import { HomeIcon, SunIcon, ArrowsRightLeftIcon } from '@/components/Icons';
+import { HomeIcon, SunIcon, ArrowsRightLeftIcon, PuzzlePieceIcon, LayersIcon } from '@/components/Icons';
 
 interface NavLink {
   href: string;
@@ -28,6 +28,8 @@ const navItems: NavSection[] = [
   {
     section: 'Thư viện',
     links: [
+      { href: '/cross', icon: PuzzlePieceIcon, label: 'Cross', badge: '15' },
+      { href: '/f2l', icon: LayersIcon, label: 'F2L', badge: '41' },
       { href: '/oll', icon: SunIcon, label: 'OLL', badge: '57' },
       { href: '/pll', icon: ArrowsRightLeftIcon, label: 'PLL', badge: '21' },
     ],

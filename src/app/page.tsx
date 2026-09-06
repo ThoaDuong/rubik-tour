@@ -66,7 +66,7 @@ export default function HomePage() {
         </p>
 
         {/* 4 bước CFOP */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {cfopSteps.map((s, i) => {
             const Icon = s.Icon;
             return (
@@ -140,11 +140,10 @@ export default function HomePage() {
               <button
                 key={g.id}
                 onClick={() => setActiveGroup(g.id)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${
-                  isActive
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer border transition-all duration-200 ${isActive
                     ? 'bg-accent-cyan/10 border-accent-cyan text-accent-cyan shadow-xs'
                     : 'bg-white border-border-subtle text-text-secondary hover:border-accent-cyan hover:text-text-primary'
-                }`}
+                  }`}
               >
                 {g.label}
               </button>

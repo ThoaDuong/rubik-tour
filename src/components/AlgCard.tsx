@@ -4,6 +4,8 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { OllCase } from '@/data/oll';
 import { PllCase } from '@/data/pll';
+import { CrossCase } from '@/data/cross';
+import { F2lCase } from '@/data/f2l';
 import { useLearningStatus } from '@/hooks/useLearningStatus';
 import {
   StarIconSolid,
@@ -15,8 +17,8 @@ import {
 const TwistyPlayer = dynamic(() => import('./TwistyPlayer'), { ssr: false });
 
 interface AlgCardProps {
-  case_: OllCase | PllCase;
-  type?: 'oll' | 'pll';
+  case_: OllCase | PllCase | CrossCase | F2lCase;
+  type?: 'oll' | 'pll' | 'cross' | 'f2l';
 }
 
 export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
@@ -35,9 +37,14 @@ export default function AlgCard({ case_, type = 'oll' }: AlgCardProps) {
   };
 
   const isOll = type === 'oll';
-  const groupBadgeClass = isOll
-    ? 'bg-accent-blue/10 text-accent-blue'
-    : 'bg-accent-purple/10 text-accent-purple';
+  const isPll = type === 'pll';
+  const isCross = type === 'cross';
+  // f2l is the remaining type
+
+  let groupBadgeClass = 'bg-accent-blue/10 text-accent-blue'; // oll default
+  if (isPll) groupBadgeClass = 'bg-accent-purple/10 text-accent-purple';
+  else if (isCross) groupBadgeClass = 'bg-emerald-500/10 text-emerald-600';
+  else if (!isOll) groupBadgeClass = 'bg-orange-500/10 text-orange-600'; // f2l
 
   // Dynamic card border & background based on status
   let cardBorderClass =
